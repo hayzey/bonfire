@@ -649,6 +649,11 @@ module.exports = function(webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      // Inject environment variables into compiled JS
+      new webpack.DefinePlugin({
+        // 'BONFIRE_SPOTIFY_CLIENT_ID': JSON.stringify(process.env.BONFIRE_SPOTIFY_CLIENT_ID)
+        'process.env.BONFIRE_SPOTIFY_CLIENT_ID': JSON.stringify(process.env.BONFIRE_SPOTIFY_CLIENT_ID)
+      }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
