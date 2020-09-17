@@ -9,7 +9,6 @@ export class BfAuthPrompt extends React.Component {
     }
 
     authorize() {
-        console.log('hmmm', this)
         this.props.authService.authorize();
     }
 
