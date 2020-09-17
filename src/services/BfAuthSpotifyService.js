@@ -18,7 +18,15 @@ export class BfAuthSpotifyService {
     }
 
     authorize() {
+        this.goToAuthPage();
+    }
+
+    goToAuthPage() {
         let url = this.generateAuthUrl();
         window.location.href = url;
+    }
+
+    finishAuth(authToken) {
+        
     }
 }
