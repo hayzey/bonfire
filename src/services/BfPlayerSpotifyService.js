@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 export class BfPlayerSpotifyService {
     constructor() {
         this.playerName = 'Bonfire Player';
@@ -5,6 +7,9 @@ export class BfPlayerSpotifyService {
         this.spotifyPlayer = null;
         this.ready = false;
         this.playing = false;
+
+        this.spotifyTokenCookieName = 'spotify-token';
+        this.authToken = null;
     }
 
     initListeners() {
@@ -13,11 +18,11 @@ export class BfPlayerSpotifyService {
         this.spotifyPlayer.addListener('authentication_error', ({ message }) => { console.error(message); });
         this.spotifyPlayer.addListener('account_error', ({ message }) => { console.error(message); });
         this.spotifyPlayer.addListener('playback_error', ({ message }) => { console.error(message); });
-      
+
         this.spotifyPlayer.addListener('ready', ({ device_id }) => {
             this.ready = true;
         });
-      
+
         this.spotifyPlayer.addListener('not_ready', ({ device_id }) => {
             this.ready = false;
         });
@@ -36,18 +41,25 @@ export class BfPlayerSpotifyService {
     init() {
         window.onSpotifyWebPlaybackSDKReady = () => {
             const Spotify = window.Spotify;
-          
-            const token = 'foo';
 
-            
             this.spotifyPlayer = new Spotify.Player({
-              name: this.playerName,
-              getOAuthToken: cb => { cb(token); }
+                name: this.playerName,
+                getOAuthToken: (cb) => {
+                    cb(this.getAuthToken());
+                }
             });
-          
+
             // Connect to the player
             this.spotifyPlayer.connect();
-          };
+        };
+    }
+
+    getAuthToken() {
+        if (!this.authToken) {
+            this.authToken = Cookies.get(this.spotifyTokenCookieName);
+        }
+
+        return this.authToken;
     }
 
     play() {

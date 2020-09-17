@@ -5,7 +5,7 @@ export class BfAuthSpotifyService {
         this.clientId = clientId;
 
         this.authEndpoint = 'https://accounts.spotify.com/authorize';
-        this.authSuccessRedirectUrl = 'http://localhost:3000/spotify-auth-success/'; // TODO: Use dynamic domain
+        this.authSuccessRedirectUrl = `${window.location.origin}/spotify-auth-success/`;
     }
 
     generateAuthUrl() {
@@ -24,9 +24,5 @@ export class BfAuthSpotifyService {
     goToAuthPage() {
         let url = this.generateAuthUrl();
         window.location.href = url;
-    }
-
-    finishAuth(authToken) {
-        
     }
 }

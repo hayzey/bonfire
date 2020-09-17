@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { BfAuthService } from '../../services/BfAuthService';
+import Cookies from 'js-cookie';
 
 export class BfSpotifyAuthSuccess extends React.Component {
     constructor(props) {
@@ -9,6 +9,8 @@ export class BfSpotifyAuthSuccess extends React.Component {
         this.state = {
             done: false
         };
+
+        this.spotifyTokenCookieName = 'spotify-token';
     }
 
     getHashValues() {
@@ -34,8 +36,12 @@ export class BfSpotifyAuthSuccess extends React.Component {
 
     finishAuth() {
         let authToken = this.getHashValues().access_token;
-        // this.props.authService.finishAuth(authToken);
-        console.log('abc', this.props.authService);
+        
+        Cookies.set(this.spotifyTokenCookieName, authToken);
+
+        this.setState({
+            done: true
+        });
     }
     
     componentDidMount() {
