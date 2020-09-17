@@ -7,16 +7,11 @@ import {
 
 import './App.css';
 
-import { BfPlayerService } from '../../services/BfPlayerService';
 import { BfAuthService } from '../../services/BfAuthService';
 
 import { BfAuthPrompt } from '../BfAuthPrompt/BfAuthPrompt';
 import { BfMain } from '../BfMain/BfMain';
 import { BfSpotifyAuthSuccess } from '../BfSpotifyAuthSuccess/BfSpotifyAuthSuccess';
-
-
-const player = new BfPlayerService();
-player.init();
 
 const auth = new BfAuthService();
 
