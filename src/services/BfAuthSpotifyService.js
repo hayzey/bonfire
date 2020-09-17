@@ -6,12 +6,15 @@ export class BfAuthSpotifyService {
 
         this.authEndpoint = 'https://accounts.spotify.com/authorize';
         this.authSuccessRedirectUrl = `${window.location.origin}/spotify-auth-success/`;
+        this.authScopes = ['streaming', 'user-read-email', 'user-read-private'];
+        this.authScopesString = this.authScopes.join(' ');
     }
 
     generateAuthUrl() {
         let url = this.authEndpoint;
         url += `?client_id=${this.clientId}`;
-        url += `&redirect_uri=${this.authSuccessRedirectUrl}`;
+        url += `&redirect_uri=${encodeURIComponent(this.authSuccessRedirectUrl)}`;
+        url += `&scope=${encodeURIComponent(this.authScopesString)}`;
         url += '&response_type=token';
 
         return url;
