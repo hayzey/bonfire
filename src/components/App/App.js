@@ -5,13 +5,12 @@ import {
     Route,
 } from 'react-router-dom';
 
-import './App.css';
-
 import { BfAuthService } from '../../services/BfAuthService';
-
 import { BfAuthPrompt } from '../BfAuthPrompt/BfAuthPrompt';
 import { BfMain } from '../BfMain/BfMain';
 import { BfSpotifyAuthSuccess } from '../BfSpotifyAuthSuccess/BfSpotifyAuthSuccess';
+
+import './App.scss';
 
 const auth = new BfAuthService();
 
@@ -32,7 +31,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="bonfire-app">
+            <main className="bonfire-app">
                 <Router>
                     <Switch>
                         <Route path="/login">
@@ -50,7 +49,7 @@ class App extends React.Component {
                         </Route>
                     </Switch>
                 </Router>
-            </div>
+            </main>
         );
     }
 }

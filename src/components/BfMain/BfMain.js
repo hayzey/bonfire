@@ -1,7 +1,10 @@
 import React from 'react';
 import Cookies from 'js-cookie';
+import Grid from '@material-ui/core/Grid';
 
 import { BfPlaybackControls } from '../BfPlaybackControls/BfPlaybackControls';
+
+import './BfMain.scss';
 
 export class BfMain extends React.Component {
     constructor(props) {
@@ -143,7 +146,8 @@ export class BfMain extends React.Component {
 
     render() {
         return (
-            <main className="main">
+            <div className="bf-main bf-authed">
+                <div></div>
                 <BfPlaybackControls
                     player={this.player}
                     ready={this.state.ready}
@@ -151,7 +155,7 @@ export class BfMain extends React.Component {
                     onTogglePlayClicked={ this.handleTogglePlayClicked }
                     onPreviousTrackClicked={ this.handlePreviousTrackClicked }
                     onNextTrackClicked={ this.handleNextTrackClicked } />
-            </main>
+            </div>
         );
     }
 }

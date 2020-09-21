@@ -1,4 +1,12 @@
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Roboto', helvetica, sans-serif;
+}
+
+#root {
+  height: 100%;
 }
