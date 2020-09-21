@@ -15,27 +15,29 @@ export class BfPlaybackControls extends React.Component {
     render() {
         return (
             <section className="playback-controls">
-                <IconButton
-                    onClick={this.props.onPreviousTrackClicked}
-                    variant="outlined"
-                    color="primary"
-                    className="previous-track-button">
-                    <SkipPreviousIcon />
-                </IconButton>
-                <IconButton
-                    onClick={this.props.onTogglePlayClicked}
-                    variant="outlined"
-                    color="primary"
-                    className="toggle-play-button">
-                    { this.props.playing ? <PauseIcon /> : <PlayArrowIcon /> }
-                </IconButton>
-                <IconButton
-                    onClick={this.props.onNextTrackClicked}
-                    variant="outlined"
-                    color="primary"
-                    className="next-track-button">
-                    <SkipNextIcon />
-                </IconButton>
+                <div className="main-playback-buttons">
+                    <IconButton
+                        onClick={this.props.onPreviousTrackClicked}
+                        variant="outlined"
+                        color="primary"
+                        className="previous-track-button">
+                        <SkipPreviousIcon />
+                    </IconButton>
+                    <IconButton
+                        onClick={this.props.onTogglePlayClicked}
+                        variant="outlined"
+                        color="primary"
+                        className="toggle-play-button">
+                        { this.props.playing ? <PauseIcon /> : <PlayArrowIcon /> }
+                    </IconButton>
+                    <IconButton
+                        onClick={this.props.onNextTrackClicked}
+                        variant="outlined"
+                        color="primary"
+                        className="next-track-button">
+                        <SkipNextIcon />
+                    </IconButton>
+                </div>
             </section>
         );
     }
