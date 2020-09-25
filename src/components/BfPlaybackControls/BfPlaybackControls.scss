@@ -1,6 +1,7 @@
 .playback-controls {
     display: grid;
     justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr;
 
     .toggle-play-button {
         border: 1px solid;

@@ -6,7 +6,13 @@ export class BfAuthSpotifyService {
 
         this.authEndpoint = 'https://accounts.spotify.com/authorize';
         this.authSuccessRedirectUrl = `${window.location.origin}/spotify-auth-success/`;
-        this.authScopes = ['streaming', 'user-read-email', 'user-read-private'];
+        this.authScopes = [
+            'streaming',
+            'user-read-email',
+            'user-read-private',
+            'user-read-playback-state',
+        ];
+        
         this.authScopesString = this.authScopes.join(' ');
     }
 
