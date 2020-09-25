@@ -2,6 +2,8 @@ import React from 'react';
 
 import { BfAuthService } from '../../services/BfAuthService';
 import { BfSpotifyApi } from '../../services/BfSpotifyApi';
+import { BfSpotifyDevice } from '../../services/BfSpotifyDevice';
+
 import { BfPlaybackControls } from '../BfPlaybackControls/BfPlaybackControls';
 
 import './BfMain.scss';
@@ -59,6 +61,8 @@ export class BfMain extends React.Component {
         this.spotifyPlayer.addListener('playback_error', ({ message }) => { console.error(message); });
 
         this.spotifyPlayer.addListener('ready', ({ device_id }) => {
+            BfSpotifyDevice.setAsCurrentDevice(device_id);
+
             this.setState({
                 ready: true
             });
