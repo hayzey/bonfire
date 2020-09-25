@@ -1,55 +1,29 @@
-import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-
 import './BfPlaybackControls.scss';
+import React from 'react';
 
-import { BfSpotifyDevice } from '../../services/BfSpotifyDevice';
+import { BfCurrentTrackInfo } from '../BfCurrentTrackInfo/BfCurrentTrackInfo';
+import { BfPlaybackButtons } from '../BfPlaybackButtons/BfPlaybackButtons';
 
 export class BfPlaybackControls extends React.Component {
     constructor(props) {
         super(props);
 
-        // BfSpotifyDevice.query();
-    }
-
-    componentDidMount() {
-        BfSpotifyDevice.query();
+        this.onPreviousTrackClicked = this.props.onPreviousTrackClicked.bind(this);
+        this.onTogglePlayClicked = this.props.onTogglePlayClicked.bind(this);
+        this.onNextTrackClicked = this.props.onNextTrackClicked.bind(this);
     }
     
     render() {
         return (
-            <section className="playback-controls">
-                <div className="current-track-info">
-                    <p>{this.props.playbackState ? this.props.playbackState.track_window.current_track.name : null }</p>
-                </div>
+            <section className="bf-playback-controls">
+                <BfCurrentTrackInfo playbackState={this.props.playbackState} />
 
-                <div className="main-playback-buttons">
-                    <IconButton
-                        onClick={this.props.onPreviousTrackClicked}
-                        variant="outlined"
-                        color="primary"
-                        className="previous-track-button">
-                        <SkipPreviousIcon />
-                    </IconButton>
-                    <IconButton
-                        onClick={this.props.onTogglePlayClicked}
-                        variant="outlined"
-                        color="primary"
-                        className="toggle-play-button">
-                        { this.props.playing ? <PauseIcon /> : <PlayArrowIcon /> }
-                    </IconButton>
-                    <IconButton
-                        onClick={this.props.onNextTrackClicked}
-                        variant="outlined"
-                        color="primary"
-                        className="next-track-button">
-                        <SkipNextIcon />
-                    </IconButton>
-                </div>
+                <BfPlaybackButtons
+                    onPreviousTrackClicked={this.props.onPreviousTrackClicked}
+                    onTogglePlayClicked={this.props.onTogglePlayClicked}
+                    onNextTrackClicked={this.props.onNextTrackClicked}
+                    playing={this.props.playing}
+                />
             </section>
         );
     }
