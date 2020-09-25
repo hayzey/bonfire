@@ -7,14 +7,26 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 
 import './BfPlaybackControls.scss';
 
+import { BfSpotifyDevice } from '../../services/BfSpotifyDevice';
+
 export class BfPlaybackControls extends React.Component {
     constructor(props) {
         super(props);
+
+        // BfSpotifyDevice.query();
+    }
+
+    componentDidMount() {
+        BfSpotifyDevice.query();
     }
     
     render() {
         return (
             <section className="playback-controls">
+                <div className="current-track-info">
+                    <p>{this.props.playbackState ? this.props.playbackState.track_window.current_track.name : null }</p>
+                </div>
+
                 <div className="main-playback-buttons">
                     <IconButton
                         onClick={this.props.onPreviousTrackClicked}

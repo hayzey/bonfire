@@ -1,10 +1,12 @@
 import React from 'react';
-import Cookies from 'js-cookie';
-import Grid from '@material-ui/core/Grid';
 
+import { BfAuthService } from '../../services/BfAuthService';
+import { BfSpotifyApi } from '../../services/BfSpotifyApi';
 import { BfPlaybackControls } from '../BfPlaybackControls/BfPlaybackControls';
 
 import './BfMain.scss';
+
+BfSpotifyApi.init();
 
 export class BfMain extends React.Component {
     constructor(props) {
@@ -12,18 +14,41 @@ export class BfMain extends React.Component {
 
         this.state = {
             ready: false,
-            playing: false
+            playing: false,
+            playbackState: null
         };
 
         this.playerName = 'Bonfire Player';
         this.spotifyPlayer = null;
-        this.spotifyTokenCookieName = 'spotify-token';
-        this.authToken = null;
         this.previousTrackBuffer = 3000; // The amount of time in ms until clicking "previous" will go to the previous track (other seek to start)
 
         this.handleTogglePlayClicked = this.handleTogglePlayClicked.bind(this);
         this.handlePreviousTrackClicked = this.handlePreviousTrackClicked.bind(this);
         this.handleNextTrackClicked = this.handleNextTrackClicked.bind(this);
+    }
+
+    init() {
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            const Spotify = window.Spotify;
+
+            this.spotifyPlayer = new Spotify.Player({
+                name: this.playerName,
+                getOAuthToken: (cb) => {
+                    let token = BfAuthService.spotifyAuthToken;
+                    cb(token);
+                }
+            });
+
+            // Connect to the player
+            this.spotifyPlayer.connect()
+                .then(success => {
+                    if (success) {
+                        console.info('The Web Playback SDK successfully connected to Spotify!', this.spotifyPlayer);
+                    }
+                });
+
+            this.initListeners();
+        };
     }
 
     initListeners() {
@@ -50,39 +75,16 @@ export class BfMain extends React.Component {
 
             if (state && !state.paused) { // Already playing
                 this.setState({
-                    playing: true
+                    playing: true,
+                    playbackState: state
                 });
             } else {
                 this.setState({
-                    playing: false
+                    playing: false,
+                    playbackState: state
                 });
             }
         });
-    }
-
-    init() {
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            const Spotify = window.Spotify;
-
-            this.spotifyPlayer = new Spotify.Player({
-                name: this.playerName,
-                getOAuthToken: (cb) => {
-                    cb(this.getAuthToken());
-                }
-            });
-
-            // Connect to the player
-            this.spotifyPlayer.connect();
-            this.initListeners();
-        };
-    }
-
-    getAuthToken() {
-        if (!this.authToken) {
-            this.authToken = Cookies.get(this.spotifyTokenCookieName);
-        }
-
-        return this.authToken;
     }
 
     getCurrentState() {
@@ -109,7 +111,7 @@ export class BfMain extends React.Component {
         this.setState({
             playing: !this.state.playing
         });
-        
+
         return this.spotifyPlayer.togglePlay();
     }
 
@@ -152,9 +154,10 @@ export class BfMain extends React.Component {
                     player={this.player}
                     ready={this.state.ready}
                     playing={this.state.playing}
-                    onTogglePlayClicked={ this.handleTogglePlayClicked }
-                    onPreviousTrackClicked={ this.handlePreviousTrackClicked }
-                    onNextTrackClicked={ this.handleNextTrackClicked } />
+                    playbackState={this.state.playbackState}
+                    onTogglePlayClicked={this.handleTogglePlayClicked}
+                    onPreviousTrackClicked={this.handlePreviousTrackClicked}
+                    onNextTrackClicked={this.handleNextTrackClicked} />
             </div>
         );
     }
