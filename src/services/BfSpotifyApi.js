@@ -4,7 +4,7 @@ import { BfAuthService } from './BfAuthService';
 export class BfSpotifyApi {
     constructor() {}
 
-    static spotifyApiUrl = 'https://api.spotify.com/v1/me/';
+    static spotifyApiUrl = 'https://api.spotify.com/v1/';
 
     static init() {
         this.configHttpInterceptors();
