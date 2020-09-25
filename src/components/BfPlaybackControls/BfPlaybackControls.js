@@ -3,6 +3,7 @@ import React from 'react';
 
 import { BfCurrentTrackInfo } from '../BfCurrentTrackInfo/BfCurrentTrackInfo';
 import { BfPlaybackButtons } from '../BfPlaybackButtons/BfPlaybackButtons';
+import { BfPlaybackProgress } from '../BfPlaybackProgress/BfPlaybackProgress';
 
 export class BfPlaybackControls extends React.Component {
     constructor(props) {
@@ -18,12 +19,16 @@ export class BfPlaybackControls extends React.Component {
             <section className="bf-playback-controls">
                 <BfCurrentTrackInfo playbackState={this.props.playbackState} />
 
-                <BfPlaybackButtons
-                    onPreviousTrackClicked={this.props.onPreviousTrackClicked}
-                    onTogglePlayClicked={this.props.onTogglePlayClicked}
-                    onNextTrackClicked={this.props.onNextTrackClicked}
-                    playing={this.props.playing}
-                />
+                <div>
+                    <BfPlaybackButtons
+                        onPreviousTrackClicked={this.props.onPreviousTrackClicked}
+                        onTogglePlayClicked={this.props.onTogglePlayClicked}
+                        onNextTrackClicked={this.props.onNextTrackClicked}
+                        playing={this.props.playing}
+                    />
+
+                    <BfPlaybackProgress playbackState={this.props.playbackState} />
+                </div>
             </section>
         );
     }
