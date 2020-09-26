@@ -17,16 +17,20 @@ export class BfMain extends React.Component {
         this.state = {
             ready: false,
             playing: false,
-            playbackState: null
+            playbackState: null,
+            position: 0,
         };
 
         this.playerName = 'Bonfire Player';
         this.spotifyPlayer = null;
         this.previousTrackBuffer = 3000; // The amount of time in ms until clicking "previous" will go to the previous track (other seek to start)
+        this.updatePositionIntervalDelayMs = 100;
+        this.updatePositionInterval = null;
 
         this.handleTogglePlayClicked = this.handleTogglePlayClicked.bind(this);
         this.handlePreviousTrackClicked = this.handlePreviousTrackClicked.bind(this);
         this.handleNextTrackClicked = this.handleNextTrackClicked.bind(this);
+        this.handleSeek = this.handleSeek.bind(this);
     }
 
     init() {
@@ -50,6 +54,7 @@ export class BfMain extends React.Component {
                 });
 
             this.initListeners();
+            this.startUpdatePositionInterval();
         };
     }
 
@@ -79,16 +84,43 @@ export class BfMain extends React.Component {
 
             if (state && !state.paused) { // Already playing
                 this.setState({
-                    playing: true,
-                    playbackState: state
-                });
-            } else {
-                this.setState({
-                    playing: false,
-                    playbackState: state
+                    playbackState: state,
+                    playing: !state.paused,
+                    position: state.position,
                 });
             }
         });
+    }
+
+    startUpdatePositionInterval() {
+        this.cancelUpdatePositionInterval();
+        
+        this.updatePositionInterval = setInterval(
+            this.updatePosition.bind(this),
+            this.updatePositionIntervalDelayMs
+        );
+    }
+
+    cancelUpdatePositionInterval() {
+        if (this.updatePositionInterval) {
+            clearInterval(this.updatePositionInterval);
+            this.updatePositionInterval = null;
+        }
+    }
+
+    updatePosition() {
+        this.spotifyPlayer.getCurrentState()
+            .then((currentState) => {
+                let position = 0;
+        
+                if (currentState) {
+                    position = currentState.position;
+                }
+
+                this.setState({
+                    position: position
+                });
+            });
     }
 
     getCurrentState() {
@@ -134,6 +166,10 @@ export class BfMain extends React.Component {
         return this.spotifyPlayer.nextTrack();
     }
 
+    seek(newPosition) {
+        this.spotifyPlayer.seek(newPosition);
+    }
+
     handleTogglePlayClicked() {
         this.togglePlay();
     }
@@ -146,8 +182,16 @@ export class BfMain extends React.Component {
         this.nextTrack();
     }
 
+    handleSeek(newPosition) {
+        this.seek(newPosition);
+    }
+
     componentDidMount() {
         this.init();
+    }
+
+    componentWillUnmount() {
+        this.cancelUpdatePositionInterval();
     }
 
     render() {
@@ -156,12 +200,14 @@ export class BfMain extends React.Component {
                 <div></div>
                 <BfPlaybackControls
                     player={this.player}
+                    playbackState={this.state.playbackState}
                     ready={this.state.ready}
                     playing={this.state.playing}
-                    playbackState={this.state.playbackState}
+                    position={this.state.position}
                     onTogglePlayClicked={this.handleTogglePlayClicked}
                     onPreviousTrackClicked={this.handlePreviousTrackClicked}
-                    onNextTrackClicked={this.handleNextTrackClicked} />
+                    onNextTrackClicked={this.handleNextTrackClicked}
+                    onSeek={this.handleSeek} />
             </div>
         );
     }
