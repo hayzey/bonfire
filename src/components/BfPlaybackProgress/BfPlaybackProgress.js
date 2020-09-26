@@ -1,15 +1,21 @@
 import './BfPlaybackProgress.scss';
 
 import React from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import Slider from '@material-ui/core/Slider';
 
 export class BfPlaybackProgress extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.handleProgressSlider = this.handleProgressSlider.bind(this);
+    }
+
     getPosition() {
-        return this.props?.playbackState?.position;
+        return this.props?.position || 0;
     }
 
     getDuration() {
-        return this.props?.playbackState?.duration;
+        return this.props?.playbackState?.duration || 0;
     }
 
     getPositionPercentage() {
@@ -51,14 +57,20 @@ export class BfPlaybackProgress extends React.Component {
         return this.convertMsToDisplayString(this.getDuration());
     }
 
+    handleProgressSlider(event, newPosition) {
+        this.props.onSeek(newPosition);
+    }
+
     render() {
         return (
             <div className="bf-playback-progress">
                 <p className="progress-value">{ this.getDisplayPosition() }</p>
-                <LinearProgress
-                    className="playback-progress-bar"
-                    variant="determinate"
-                    value={this.getPositionPercentage()}
+                <Slider
+                    className="track-position-slider"
+                    value={this.getPosition()}
+                    min={0}
+                    max={this.getDuration()}
+                    onChangeCommitted={this.handleProgressSlider}
                 />
                 <p className="progress-value">{ this.getDisplayDuration() }</p>
             </div>

@@ -12,6 +12,12 @@ export class BfPlaybackControls extends React.Component {
         this.onPreviousTrackClicked = this.props.onPreviousTrackClicked.bind(this);
         this.onTogglePlayClicked = this.props.onTogglePlayClicked.bind(this);
         this.onNextTrackClicked = this.props.onNextTrackClicked.bind(this);
+
+        this.handleSeek = this.handleSeek.bind(this);
+    }
+
+    handleSeek(newPosition) {
+        this.props.onSeek(newPosition);
     }
     
     render() {
@@ -27,7 +33,10 @@ export class BfPlaybackControls extends React.Component {
                         playing={this.props.playing}
                     />
 
-                    <BfPlaybackProgress playbackState={this.props.playbackState} />
+                    <BfPlaybackProgress
+                        playbackState={this.props.playbackState}
+                        position={this.props.position}
+                        onSeek={this.handleSeek} />
                 </div>
             </section>
         );
