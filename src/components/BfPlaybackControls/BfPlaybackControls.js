@@ -2,7 +2,8 @@ import './BfPlaybackControls.scss';
 import React from 'react';
 
 import { BfCurrentTrackInfo } from '../BfCurrentTrackInfo/BfCurrentTrackInfo';
-import { BfPlaybackButtons } from '../BfPlaybackButtons/BfPlaybackButtons';
+import { BfPlaybackControlsPrimary } from '../BfPlaybackControlsPrimary/BfPlaybackControlsPrimary';
+import { BfPlaybackControlsSecondary } from '../BfPlaybackControlsSecondary/BfPlaybackControlsSecondary';
 import { BfPlaybackProgress } from '../BfPlaybackProgress/BfPlaybackProgress';
 
 export class BfPlaybackControls extends React.Component {
@@ -12,12 +13,6 @@ export class BfPlaybackControls extends React.Component {
         this.onPreviousTrackClicked = this.props.onPreviousTrackClicked.bind(this);
         this.onTogglePlayClicked = this.props.onTogglePlayClicked.bind(this);
         this.onNextTrackClicked = this.props.onNextTrackClicked.bind(this);
-
-        this.handleSeek = this.handleSeek.bind(this);
-    }
-
-    handleSeek(newPosition) {
-        this.props.onSeek(newPosition);
     }
     
     render() {
@@ -25,8 +20,8 @@ export class BfPlaybackControls extends React.Component {
             <section className="bf-playback-controls">
                 <BfCurrentTrackInfo playbackState={this.props.playbackState} />
 
-                <div>
-                    <BfPlaybackButtons
+                <div className="primary-controls">
+                    <BfPlaybackControlsPrimary
                         onPreviousTrackClicked={this.props.onPreviousTrackClicked}
                         onTogglePlayClicked={this.props.onTogglePlayClicked}
                         onNextTrackClicked={this.props.onNextTrackClicked}
@@ -36,8 +31,14 @@ export class BfPlaybackControls extends React.Component {
                     <BfPlaybackProgress
                         playbackState={this.props.playbackState}
                         position={this.props.position}
-                        onSeek={this.handleSeek} />
+                        onSeek={this.props.onSeek} />
                 </div>
+
+                <BfPlaybackControlsSecondary
+                    volume={this.props.volume}
+                    onVolumeChanged={this.props.onVolumeChanged}
+                    onMuteClicked={this.props.onMuteClicked}
+                />
             </section>
         );
     }

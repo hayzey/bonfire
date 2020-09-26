@@ -65,13 +65,15 @@ export class BfPlaybackProgress extends React.Component {
         return (
             <div className="bf-playback-progress">
                 <p className="progress-value">{ this.getDisplayPosition() }</p>
-                <Slider
-                    className="track-position-slider"
-                    value={this.getPosition()}
-                    min={0}
-                    max={this.getDuration()}
-                    onChangeCommitted={this.handleProgressSlider}
-                />
+                <div className="track-position-slider-container">
+                    <Slider
+                        className="track-position-slider"
+                        value={this.getPosition()}
+                        min={0}
+                        max={this.getDuration()}
+                        onChangeCommitted={this.handleProgressSlider}
+                    />
+                </div>
                 <p className="progress-value">{ this.getDisplayDuration() }</p>
             </div>
         );
