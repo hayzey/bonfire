@@ -1,0 +1,14 @@
+.bf-playback-controls-secondary {
+    padding: 8px 40px;
+
+    .volume-controls {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .toggle-mute-button {
+        margin-right: 16px;
+    }
+}
