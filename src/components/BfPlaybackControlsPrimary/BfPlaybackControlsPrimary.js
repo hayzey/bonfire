@@ -1,4 +1,4 @@
-import './BfPlaybackButtons.scss';
+import './BfPlaybackControlsPrimary.scss';
 
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,14 +7,14 @@ import PauseIcon from '@material-ui/icons/Pause';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 
-export class BfPlaybackButtons extends React.Component {
+export class BfPlaybackControlsPrimary extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
         return (
-            <div className="bf-playback-buttons">
+            <div className="bf-playback-controls-primary">
                 <IconButton
                     onClick={this.props.onPreviousTrackClicked}
                     variant="outlined"
