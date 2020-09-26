@@ -19,6 +19,8 @@ export class BfMain extends React.Component {
             playing: false,
             playbackState: null,
             position: 0,
+            volume: 100,
+            preMuteVolume: 100,
         };
 
         this.playerName = 'Bonfire Player';
@@ -31,6 +33,8 @@ export class BfMain extends React.Component {
         this.handlePreviousTrackClicked = this.handlePreviousTrackClicked.bind(this);
         this.handleNextTrackClicked = this.handleNextTrackClicked.bind(this);
         this.handleSeek = this.handleSeek.bind(this);
+        this.handleVolumeChanged = this.handleVolumeChanged.bind(this);
+        this.handleMuteClicked = this.handleMuteClicked.bind(this);
     }
 
     init() {
@@ -61,7 +65,11 @@ export class BfMain extends React.Component {
     initListeners() {
         // Error handling
         this.spotifyPlayer.addListener('initialization_error', ({ message }) => { console.error(message); });
-        this.spotifyPlayer.addListener('authentication_error', ({ message }) => { console.error(message); });
+
+        this.spotifyPlayer.addListener('authentication_error', ({ message }) => {
+            console.error('Failed to authenticate', message);
+        });
+        
         this.spotifyPlayer.addListener('account_error', ({ message }) => { console.error(message); });
         this.spotifyPlayer.addListener('playback_error', ({ message }) => { console.error(message); });
 
@@ -170,6 +178,26 @@ export class BfMain extends React.Component {
         this.spotifyPlayer.seek(newPosition);
     }
 
+    updateVolume(newVolume) {
+        this.spotifyPlayer.setVolume(newVolume);
+        
+        this.setState({
+            volume: newVolume
+        });
+    }
+
+    toggleMute() {
+        if (this.state.volume) {
+            this.setState({
+                preMuteVolume: this.state.volume
+            });
+    
+            this.updateVolume(0);
+        } else {
+            this.updateVolume(this.state.preMuteVolume);
+        }
+    }    
+
     handleTogglePlayClicked() {
         this.togglePlay();
     }
@@ -184,6 +212,14 @@ export class BfMain extends React.Component {
 
     handleSeek(newPosition) {
         this.seek(newPosition);
+    }
+    
+    handleVolumeChanged(event, newVolume) {
+        this.updateVolume(newVolume);
+    }
+
+    handleMuteClicked(event) {
+        this.toggleMute();
     }
 
     componentDidMount() {
@@ -204,10 +240,14 @@ export class BfMain extends React.Component {
                     ready={this.state.ready}
                     playing={this.state.playing}
                     position={this.state.position}
+                    volume={this.state.volume}
                     onTogglePlayClicked={this.handleTogglePlayClicked}
                     onPreviousTrackClicked={this.handlePreviousTrackClicked}
                     onNextTrackClicked={this.handleNextTrackClicked}
-                    onSeek={this.handleSeek} />
+                    onSeek={this.handleSeek}
+                    onVolumeChanged={this.handleVolumeChanged}
+                    onMuteClicked={this.handleMuteClicked}
+                />
             </div>
         );
     }
