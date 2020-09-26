@@ -1,0 +1,20 @@
+.bf-playback-progress {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0 12px 0;
+
+    p {
+        margin: 0;
+    }
+
+    .track-position-slider {
+        margin: 0 8px;
+    }
+
+    .progress-value {
+        font-weight: 500;
+        font-size: 12px;
+    }
+}
