@@ -16,7 +16,9 @@ export class BfMainContent extends React.Component {
                 <Router>
                     <Switch>
                         <Route path="/">
-                            <BfAllTracks></BfAllTracks>
+                            <BfAllTracks
+                                playbackState={ this.props.playbackState }
+                            />
                         </Route>
                     </Switch>
                 </Router>

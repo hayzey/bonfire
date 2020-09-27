@@ -8,22 +8,22 @@ import { BfTrackList } from '../BfTrackList/BfTrackList';
 export class BfAllTracks extends React.Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             tracks: []
         };
 
         this.handlePlayTrack = this.handlePlayTrack.bind(this);
     }
-    
+
     addTracksToList(tracks) {
         let _tracks = this.state.tracks.concat(tracks);
-        
+
         this.setState({
             tracks: _tracks
         })
     }
-    
+
     syncFirstUserTracks() {
         return BfSpotifyTrack.queryUserTracks({
             limit: 50
@@ -38,7 +38,7 @@ export class BfAllTracks extends React.Component {
     handlePlayTrack(track) {
         this.playTrack(track);
     }
-    
+
     componentDidMount() {
         this.syncFirstUserTracks()
             .then((res) => {
@@ -46,13 +46,14 @@ export class BfAllTracks extends React.Component {
                 this.addTracksToList(res.data.items);
             });
     }
-    
+
     render() {
         return (
             <div className="bf-all-tracks">
                 <BfTrackList
-                    tracks={ this.state.tracks }
-                    onPlayTrack={ this.handlePlayTrack }
+                    tracks={this.state.tracks}
+                    onPlayTrack={this.handlePlayTrack}
+                    playbackState={ this.props.playbackState }
                 />
             </div>
         );

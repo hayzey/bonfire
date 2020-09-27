@@ -273,7 +273,9 @@ export class BfMain extends React.Component {
                 
                 {
                     this.readyToRender() ?
-                    <BfMainContent /> :
+                    <BfMainContent
+                        playbackState={ this.state.playbackState }
+                    /> :
                     <BfMainContentLoader />
                 }
 
