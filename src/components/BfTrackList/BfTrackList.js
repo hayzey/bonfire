@@ -1,3 +1,5 @@
+import './BfTrackList.scss';
+
 import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -34,6 +36,14 @@ export class BfTrackList extends React.Component {
             return trackAlbum.name;
         }
     }
+
+    playTrack(track) {
+        this.props.onPlayTrack(track);
+    }
+
+    handleTrackDoubleClick(track) {
+        this.playTrack(track);
+    }
     
     render() {
         return (
@@ -49,7 +59,11 @@ export class BfTrackList extends React.Component {
                         </TableHead>
                         <TableBody>
                             {this.props.tracks.map((track) => (
-                                <TableRow key={track.track.id}>
+                                <TableRow
+                                    className="track-row"
+                                    key={ track.track.id }
+                                    onDoubleClick={ () => this.handleTrackDoubleClick(track) }
+                                >
                                     <TableCell component="th" scope="row">{ this.getTrackName(track) }</TableCell>
                                     <TableCell>{ this.getTrackArtistName(track) }</TableCell>
                                     <TableCell>{ this.getTrackAlbumName(track) }</TableCell>

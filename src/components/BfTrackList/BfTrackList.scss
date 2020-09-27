@@ -1,0 +1,11 @@
+$row-hover-color: rgba(255, 255, 255, 0.1);
+
+.bf-track-list {
+    user-select: none;
+
+    .track-row {
+        &:hover {
+            background-color: $row-hover-color;
+        }
+    }
+}

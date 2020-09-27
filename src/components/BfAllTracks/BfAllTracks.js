@@ -1,6 +1,7 @@
 import './BfAllTracks.scss';
 
 import React from 'react';
+import { BfSpotifyPlayer } from '../../services/BfSpotifyPlayer';
 import { BfSpotifyTrack } from '../../services/BfSpotifyTrack';
 import { BfTrackList } from '../BfTrackList/BfTrackList';
 
@@ -11,6 +12,8 @@ export class BfAllTracks extends React.Component {
         this.state = {
             tracks: []
         };
+
+        this.handlePlayTrack = this.handlePlayTrack.bind(this);
     }
     
     addTracksToList(tracks) {
@@ -26,6 +29,15 @@ export class BfAllTracks extends React.Component {
             limit: 50
         });
     }
+
+    playTrack(track) {
+        let trackUri = track.track.uri;
+        BfSpotifyPlayer.playTracks([trackUri]);
+    }
+
+    handlePlayTrack(track) {
+        this.playTrack(track);
+    }
     
     componentDidMount() {
         this.syncFirstUserTracks()
@@ -40,6 +52,7 @@ export class BfAllTracks extends React.Component {
             <div className="bf-all-tracks">
                 <BfTrackList
                     tracks={ this.state.tracks }
+                    onPlayTrack={ this.handlePlayTrack }
                 />
             </div>
         );
