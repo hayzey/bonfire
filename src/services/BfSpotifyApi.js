@@ -24,7 +24,7 @@ export class BfSpotifyApi {
     // Adds the appropriate headers to any Spotify API requests
     static authRequestSuccessInterceptor(config) {
         if (config.url.includes(this.spotifyApiUrl)) {
-            const token = BfAuthService.spotifyAuthToken;
+            const token = BfAuthService.getSpotifyAuthToken();
             
             if (token) {
                 config.headers['Authorization'] = `Bearer ${token}`;

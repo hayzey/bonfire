@@ -18,26 +18,33 @@ export class BfPlaybackControls extends React.Component {
     render() {
         return (
             <section className="bf-playback-controls">
-                <BfCurrentTrackInfo playbackState={this.props.playbackState} />
+                <BfCurrentTrackInfo
+                    ready={ this.props.ready }
+                    playbackState={ this.props.playbackState }
+                />
 
                 <div className="primary-controls">
                     <BfPlaybackControlsPrimary
-                        onPreviousTrackClicked={this.props.onPreviousTrackClicked}
-                        onTogglePlayClicked={this.props.onTogglePlayClicked}
-                        onNextTrackClicked={this.props.onNextTrackClicked}
-                        playing={this.props.playing}
+                        ready={ this.props.ready }
+                        onPreviousTrackClicked={ this.props.onPreviousTrackClicked }
+                        onTogglePlayClicked={ this.props.onTogglePlayClicked }
+                        onNextTrackClicked={ this.props.onNextTrackClicked }
+                        playing={ this.props.playing }
                     />
 
                     <BfPlaybackProgress
-                        playbackState={this.props.playbackState}
-                        position={this.props.position}
-                        onSeek={this.props.onSeek} />
+                        ready={ this.props.ready }
+                        playbackState={ this.props.playbackState }
+                        position={ this.props.position }
+                        onSeek={ this.props.onSeek}
+                    />
                 </div>
 
                 <BfPlaybackControlsSecondary
-                    volume={this.props.volume}
-                    onVolumeChanged={this.props.onVolumeChanged}
-                    onMuteClicked={this.props.onMuteClicked}
+                    ready={ this.props.ready }
+                    volume={ this.props.volume }
+                    onVolumeChanged={ this.props.onVolumeChanged }
+                    onMuteClicked={ this.props.onMuteClicked }
                 />
             </section>
         );

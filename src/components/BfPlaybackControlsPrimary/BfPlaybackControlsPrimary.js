@@ -16,24 +16,27 @@ export class BfPlaybackControlsPrimary extends React.Component {
         return (
             <div className="bf-playback-controls-primary">
                 <IconButton
+                    className="previous-track-button"
+                    disabled={ !this.props.ready }
                     onClick={this.props.onPreviousTrackClicked}
                     variant="outlined"
-                    color="primary"
-                    className="previous-track-button">
+                    color="primary">
                     <SkipPreviousIcon />
                 </IconButton>
                 <IconButton
+                    className="toggle-play-button"
+                    disabled={ !this.props.ready }
                     onClick={this.props.onTogglePlayClicked}
                     variant="outlined"
-                    color="primary"
-                    className="toggle-play-button">
+                    color="primary">
                     { this.props.playing ? <PauseIcon /> : <PlayArrowIcon /> }
                 </IconButton>
                 <IconButton
+                    className="next-track-button"
+                    disabled={ !this.props.ready }
                     onClick={this.props.onNextTrackClicked}
                     variant="outlined"
-                    color="primary"
-                    className="next-track-button">
+                    color="primary">
                     <SkipNextIcon />
                 </IconButton>
             </div>
