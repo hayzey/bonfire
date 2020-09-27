@@ -68,6 +68,7 @@ export class BfPlaybackProgress extends React.Component {
                 <div className="track-position-slider-container">
                     <Slider
                         className="track-position-slider"
+                        disabled={ !this.props.ready }
                         value={this.getPosition()}
                         min={0}
                         max={this.getDuration()}
