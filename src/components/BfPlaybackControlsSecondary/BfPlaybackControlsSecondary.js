@@ -33,12 +33,14 @@ export class BfPlaybackControlsSecondary extends React.Component {
                 <div className="volume-controls">
                     <IconButton
                         className="toggle-mute-button"
+                        disabled={ !this.props.ready }
                         onClick={this.props.onMuteClicked}
                         size="small">
                         { this.getVolumeLevelIcon() }
                     </IconButton>
                     <Slider
                         className="volume-slider"
+                        disabled={ !this.props.ready }
                         value={this.props.volume}
                         min={0}
                         max={1}

@@ -3,7 +3,7 @@ import React from 'react';
 import { BfAuthService } from '../../services/BfAuthService';
 import { BfSpotifyApi } from '../../services/BfSpotifyApi';
 import { BfSpotifyDevice } from '../../services/BfSpotifyDevice';
-
+import { BfAuthDialog } from '../BfAuthDialog/BfAuthDialog';
 import { BfPlaybackControls } from '../BfPlaybackControls/BfPlaybackControls';
 
 import './BfMain.scss';
@@ -15,7 +15,9 @@ export class BfMain extends React.Component {
         super(props);
 
         this.state = {
-            ready: false,
+            isAuthed: BfAuthService.isAuthed(),
+            sdkReady: false,
+            playerReady: false,
             playing: false,
             playbackState: null,
             position: 0,
@@ -44,7 +46,7 @@ export class BfMain extends React.Component {
             this.spotifyPlayer = new Spotify.Player({
                 name: this.playerName,
                 getOAuthToken: (cb) => {
-                    let token = BfAuthService.spotifyAuthToken;
+                    let token = BfAuthService.getSpotifyAuthToken();
                     cb(token);
                 }
             });
@@ -54,6 +56,10 @@ export class BfMain extends React.Component {
                 .then(success => {
                     if (success) {
                         console.info('The Web Playback SDK successfully connected to Spotify!', this.spotifyPlayer);
+
+                        this.setState({
+                            sdkReady: true
+                        });
                     }
                 });
 
@@ -64,26 +70,34 @@ export class BfMain extends React.Component {
 
     initListeners() {
         // Error handling
-        this.spotifyPlayer.addListener('initialization_error', ({ message }) => { console.error(message); });
+        this.spotifyPlayer.addListener('initialization_error', ({ message }) => {
+            console.error('initialization_error', message);
+        });
 
         this.spotifyPlayer.addListener('authentication_error', ({ message }) => {
-            console.error('Failed to authenticate', message);
+            console.error('authentication_error', message);
+            BfAuthService.logOut();
         });
         
-        this.spotifyPlayer.addListener('account_error', ({ message }) => { console.error(message); });
-        this.spotifyPlayer.addListener('playback_error', ({ message }) => { console.error(message); });
+        this.spotifyPlayer.addListener('account_error', ({ message }) => {
+            console.error('account_error', message);
+        });
+
+        this.spotifyPlayer.addListener('playback_error', ({ message }) => {
+            console.error('playback_error', message);
+        });
 
         this.spotifyPlayer.addListener('ready', ({ device_id }) => {
             BfSpotifyDevice.setAsCurrentDevice(device_id);
 
             this.setState({
-                ready: true
+                playerReady: true
             });
         });
 
         this.spotifyPlayer.addListener('not_ready', ({ device_id }) => {
             this.setState({
-                ready: false
+                playerReady: false
             });
         });
 
@@ -223,30 +237,46 @@ export class BfMain extends React.Component {
     }
 
     componentDidMount() {
+        this.onAuthChangedWatcher = BfAuthService.onAuthChanged((isAuthed) => {
+            this.setState({
+                isAuthed: !!isAuthed
+            });
+        });
+        
         this.init();
     }
 
     componentWillUnmount() {
         this.cancelUpdatePositionInterval();
+        
+        if (this.onAuthChangedWatcher) {
+            this.onAuthChangedWatcher();
+        }
     }
 
     render() {
+        let classes = 'bf-main';
+        
         return (
-            <div className="bf-main bf-authed">
+            <div className={classes}>
+                <BfAuthDialog
+                    open={ !this.state.isAuthed && this.state.sdkReady }
+                />
+                
                 <div></div>
                 <BfPlaybackControls
-                    player={this.player}
-                    playbackState={this.state.playbackState}
-                    ready={this.state.ready}
-                    playing={this.state.playing}
-                    position={this.state.position}
-                    volume={this.state.volume}
-                    onTogglePlayClicked={this.handleTogglePlayClicked}
-                    onPreviousTrackClicked={this.handlePreviousTrackClicked}
-                    onNextTrackClicked={this.handleNextTrackClicked}
-                    onSeek={this.handleSeek}
-                    onVolumeChanged={this.handleVolumeChanged}
-                    onMuteClicked={this.handleMuteClicked}
+                    player={ this.player }
+                    playbackState={ this.state.playbackState }
+                    ready={ !!(this.state.playerReady && this.state.sdkReady && this.state.isAuthed) }
+                    playing={ this.state.playing }
+                    position={ this.state.position }
+                    volume={ this.state.volume }
+                    onTogglePlayClicked={ this.handleTogglePlayClicked }
+                    onPreviousTrackClicked={ this.handlePreviousTrackClicked }
+                    onNextTrackClicked={ this.handleNextTrackClicked }
+                    onSeek={ this.handleSeek }
+                    onVolumeChanged={ this.handleVolumeChanged }
+                    onMuteClicked={ this.handleMuteClicked }
                 />
             </div>
         );
