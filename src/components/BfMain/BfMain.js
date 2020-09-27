@@ -4,6 +4,8 @@ import { BfAuthService } from '../../services/BfAuthService';
 import { BfSpotifyApi } from '../../services/BfSpotifyApi';
 import { BfSpotifyDevice } from '../../services/BfSpotifyDevice';
 import { BfAuthDialog } from '../BfAuthDialog/BfAuthDialog';
+import { BfMainContent } from '../BfMainContent/BfMainContent';
+import { BfMainContentLoader } from '../BfMainContentLoader/BfMainContentLoader';
 import { BfPlaybackControls } from '../BfPlaybackControls/BfPlaybackControls';
 
 import './BfMain.scss';
@@ -104,13 +106,11 @@ export class BfMain extends React.Component {
         this.spotifyPlayer.addListener('player_state_changed', (state) => {
             console.info('Player state changed', state);
 
-            if (state && !state.paused) { // Already playing
-                this.setState({
-                    playbackState: state,
-                    playing: !state.paused,
-                    position: state.position,
-                });
-            }
+            this.setState({
+                playbackState: state,
+                playing: !state.paused,
+                position: state.position,
+            });
         });
     }
 
@@ -254,20 +254,33 @@ export class BfMain extends React.Component {
         }
     }
 
+    readyToRender() {
+        return this.state.sdkReady && this.state.playerReady;
+    }
+
+    shouldShowAuthPrompt() {
+        return !this.state.isAuthed && this.state.sdkReady;
+    }
+
     render() {
         let classes = 'bf-main';
         
         return (
             <div className={classes}>
                 <BfAuthDialog
-                    open={ !this.state.isAuthed && this.state.sdkReady }
+                    open={ this.shouldShowAuthPrompt() }
                 />
                 
-                <div></div>
+                {
+                    this.readyToRender() ?
+                    <BfMainContent /> :
+                    <BfMainContentLoader />
+                }
+
                 <BfPlaybackControls
                     player={ this.player }
                     playbackState={ this.state.playbackState }
-                    ready={ !!(this.state.playerReady && this.state.sdkReady && this.state.isAuthed) }
+                    ready={ !!(this.state.isAuthed && this.readyToRender()) }
                     playing={ this.state.playing }
                     position={ this.state.position }
                     volume={ this.state.volume }
