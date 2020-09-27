@@ -1,0 +1,8 @@
+.bf-main {
+    position: relative;
+    display: grid;
+    grid-template-areas: "main" "footer";
+    grid-template-rows: 1fr min-content;
+    grid-template-columns: 1fr;
+    height: 100%;
+}

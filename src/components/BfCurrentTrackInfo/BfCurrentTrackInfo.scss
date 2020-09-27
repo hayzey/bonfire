@@ -1,0 +1,41 @@
+$album-cover-size: 100px;
+
+.bf-current-track-info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: center;
+    align-items: center;
+
+    .album-cover-container {
+        position: relative;
+        width: $album-cover-size;
+        height: $album-cover-size;
+    }
+
+    .album-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .album-cover-loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+    }
+
+    .main-track-info {
+        padding: 8px 24px;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .track-name {
+        font-weight: 500;
+    }
+}

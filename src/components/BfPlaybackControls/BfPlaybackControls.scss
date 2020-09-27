@@ -1,0 +1,21 @@
+
+
+.bf-playback-controls {
+    display: grid;
+    grid-template-columns: minmax(250px, 1fr) 3fr minmax(250px, 1fr);
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+
+    .primary-controls {
+        padding: 8px 24px;
+    }
+
+    .bf-playback-controls-primary {
+        margin-bottom: 8px;
+    }
+
+    .bf-playback-progress {
+        margin-top: 8px;
+    }
+}
