@@ -37,6 +37,26 @@ export class BfTrackList extends React.Component {
         }
     }
 
+    isTrackPlaying(track) {
+        // console.log('isTrackPlaying', track, this.props.playbackState);
+        
+        if (!track || !this.props.playbackState) {
+            return false;
+        }
+        
+        return track.track.id === this.props?.playbackState?.track_window?.current_track.id;
+    }
+
+    getTrackRowClasses(track) {
+        let classes = 'track-row';
+
+        if (this.isTrackPlaying(track)) {
+            classes += ' track-playing';
+        }
+
+        return classes;
+    }
+
     playTrack(track) {
         this.props.onPlayTrack(track);
     }
@@ -60,7 +80,7 @@ export class BfTrackList extends React.Component {
                         <TableBody>
                             {this.props.tracks.map((track) => (
                                 <TableRow
-                                    className="track-row"
+                                    className={ this.getTrackRowClasses(track) }
                                     key={ track.track.id }
                                     onDoubleClick={ () => this.handleTrackDoubleClick(track) }
                                 >
