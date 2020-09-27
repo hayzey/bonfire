@@ -1,0 +1,20 @@
+$row-hover-color: rgba(255, 255, 255, 0.1);
+$primary-color: #FF9C61;
+
+.bf-track-list {
+    user-select: none;
+
+    .track-row {
+        &:hover {
+            background-color: $row-hover-color;
+        }
+    }
+
+    .track-playing {
+        color: $primary-color;
+
+        .MuiTableCell-body {
+            color: inherit;
+        }
+    }
+}

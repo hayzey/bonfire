@@ -3,8 +3,6 @@ import './BfAuthDialog.scss';
 import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -34,7 +32,7 @@ export class BfAuthDialog extends React.Component {
                 </DialogTitle>
 
                 <DialogContent className="dialog-content">
-                    <p>Please in with Spotify to continue.</p>
+                    <p>Please log in with Spotify to continue.</p>
                 </DialogContent>
 
                 <DialogActions>
