@@ -1,0 +1,11 @@
+$loader-size: 64px;
+
+.bf-main-content-loader {
+    position: relative;
+    
+    .loader {
+        position: absolute;
+        top: calc(50% - #{$loader-size / 2});
+        left: calc(50% - #{$loader-size / 2});
+    }
+}

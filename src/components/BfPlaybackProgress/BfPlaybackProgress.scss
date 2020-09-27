@@ -1,0 +1,28 @@
+$slider-combined-height: 12px;
+
+.bf-playback-progress {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        margin: 0;
+    }
+
+    .track-position-slider-container {
+        margin: 0 16px;
+        vertical-align: middle;
+    }
+
+    .track-position-slider {
+        height: $slider-combined-height / 2;
+        padding: 0;
+        vertical-align: middle;
+    }
+
+    .progress-value {
+        font-weight: 500;
+        font-size: $slider-combined-height;
+    }
+}
