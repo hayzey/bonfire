@@ -17,10 +17,21 @@ export class Resource {
 
         for (let key in params) {
             let value = params[key];
-            _url = _url.replace(`:${key}`, value);
+
+            if (_url.includes(`:${key}`)) {
+                _url = _url.replace(`:${key}`, value);
+            } else {
+                _url = this.addQueryParamToUrl(_url, key, value);
+            }
         };
 
         return _url;
+    }
+
+    static addQueryParamToUrl(url, key, value) {
+        let _url = new URL(url);
+        _url.searchParams.append(key, value);
+        return _url.toString();
     }
 
     static getInstanceMethodParams(resource, params) {
