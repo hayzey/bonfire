@@ -1,13 +1,19 @@
-.bf-auth-dialog {    
+$primary-color: #FF9C61;
+
+.bf-auth-dialog {
     .dialog-header {
         padding: 16px;
     }
 
     .dialog-content {
-        padding: 0 16px 40px 16px;
+        padding: 0 16px 24px 16px;
 
         p {
-            margin: 0;
+            margin: 8px 0;
+        }
+
+        a {
+            color: $primary-color;
         }
     }
 
