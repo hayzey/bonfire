@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import App from './components/App/App';
+import { App } from './components/App/App';
 import * as serviceWorker from './serviceWorker';
 
 import './index.scss';
