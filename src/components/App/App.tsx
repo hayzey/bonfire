@@ -10,7 +10,7 @@ import { BfSpotifyAuthSuccess } from '../BfSpotifyAuthSuccess/BfSpotifyAuthSucce
 
 import './App.scss';
 
-class App extends React.Component {
+export class App extends React.Component {
     render() {
         return (
             <main className="bonfire-app">
@@ -28,5 +28,3 @@ class App extends React.Component {
         );
     }
 }
-
-export default App;
