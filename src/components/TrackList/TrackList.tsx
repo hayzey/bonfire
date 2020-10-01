@@ -8,10 +8,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import { PlaybackState } from '../../services/SpotifyPlayer';
 import { MetaTrack } from '../../services/SpotifyTrack';
 
 interface TrackListProps {
-    playbackState: object,
+    playbackState?: PlaybackState;
     tracks: Array<MetaTrack>,
     onPlayTrack: (metaTrack: MetaTrack) => void
 }

@@ -4,7 +4,7 @@ import { SkeletonLoader } from '../SkeletonLoader/SkeletonLoader';
 import { PlaybackState } from '../../services/SpotifyPlayer';
 
 interface CurrentTrackInfoProps {
-    playbackState: PlaybackState;
+    playbackState?: PlaybackState;
     ready: boolean;
 }
 

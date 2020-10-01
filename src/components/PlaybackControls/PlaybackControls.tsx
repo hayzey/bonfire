@@ -1,20 +1,27 @@
 import './PlaybackControls.scss';
 import React from 'react';
 
+import { PlaybackState } from '../../services/SpotifyPlayer';
 import { CurrentTrackInfo } from '../CurrentTrackInfo/CurrentTrackInfo';
 import { PlaybackControlsPrimary } from '../PlaybackControlsPrimary/PlaybackControlsPrimary';
 import { PlaybackControlsSecondary } from '../PlaybackControlsSecondary/PlaybackControlsSecondary';
 import { PlaybackProgress } from '../PlaybackProgress/PlaybackProgress';
 
-export class PlaybackControls extends React.Component {
-    constructor(props) {
-        super(props);
+interface PlaybackControlsProps {
+    playbackState?: PlaybackState;
+    ready: boolean;
+    playing: boolean;
+    position: number;
+    volume: number;
+    onSeek: (newPosition: number) => void;
+    onPreviousTrackClicked: (event: object) => void;
+    onTogglePlayClicked: (event: object) => void;
+    onNextTrackClicked: (event: object) => void;
+    onVolumeChanged: (event: object, newVolume: number) => void;
+    onMuteClicked: (event: object) => void;
+}
 
-        this.onPreviousTrackClicked = this.props.onPreviousTrackClicked.bind(this);
-        this.onTogglePlayClicked = this.props.onTogglePlayClicked.bind(this);
-        this.onNextTrackClicked = this.props.onNextTrackClicked.bind(this);
-    }
-    
+export class PlaybackControls extends React.Component<PlaybackControlsProps> {
     render() {
         return (
             <section className="bf-playback-controls">

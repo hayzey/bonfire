@@ -2,9 +2,17 @@ import './PlaybackProgress.scss';
 
 import React from 'react';
 import Slider from '@material-ui/core/Slider';
+import { PlaybackState } from '../../services/SpotifyPlayer';
 
-export class PlaybackProgress extends React.Component {
-    constructor(props) {
+interface PlaybackProgressProps {
+    playbackState?: PlaybackState;
+    ready: boolean;
+    position: number;
+    onSeek: (newPosition: number) => void;
+}
+
+export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
+    constructor(props: PlaybackProgressProps) {
         super(props);
         
         this.handleProgressSlider = this.handleProgressSlider.bind(this);

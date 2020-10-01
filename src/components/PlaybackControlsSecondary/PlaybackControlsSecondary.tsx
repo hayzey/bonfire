@@ -8,11 +8,14 @@ import VolumeMuteIcon from '@material-ui/icons/VolumeMute';
 import VolumeDownIcon from '@material-ui/icons/VolumeDown';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
-export class PlaybackControlsSecondary extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+interface PlaybackControlsSecondaryProps {
+    ready: boolean;
+    volume: number;
+    onMuteClicked: (event: object) => void;
+    onVolumeChanged: (event: object, newVolume: number) => void;
+}
 
+export class PlaybackControlsSecondary extends React.Component<PlaybackControlsSecondaryProps> {
     getVolumeLevelIcon() {
         let volume = this.props.volume;
         

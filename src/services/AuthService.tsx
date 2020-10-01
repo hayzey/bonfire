@@ -45,7 +45,7 @@ export class AuthService {
         this.removeSpotifyAuthToken();
     }
 
-    static onAuthChanged(callback) {
+    static onAuthChanged(callback: (isAuthed: boolean) => any) {
         this.onAuthChangedWatchers.push(callback);
 
         
