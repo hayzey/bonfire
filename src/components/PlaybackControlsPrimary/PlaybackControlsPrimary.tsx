@@ -7,11 +7,16 @@ import PauseIcon from '@material-ui/icons/Pause';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 
-export class PlaybackControlsPrimary extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
+interface PlaybackControlsPrimaryProps {
+    ready: boolean;
+    playing: boolean;
+    onPreviousTrackClicked: (event: object) => void;
+    onTogglePlayClicked: (event: object) => void;
+    onNextTrackClicked: (event: object) => void;
+}
+
+export class PlaybackControlsPrimary extends React.Component<PlaybackControlsPrimaryProps> {
     render() {
         return (
             <div className="bf-playback-controls-primary">

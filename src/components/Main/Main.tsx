@@ -16,7 +16,7 @@ interface MainState {
     sdkReady: boolean,
     playerReady: boolean,
     playing: boolean,
-    playbackState: PlaybackState | null,
+    playbackState?: PlaybackState,
     position: number,
     volume: number,
     preMuteVolume: number,
@@ -27,11 +27,12 @@ interface MainProps {}
 SpotifyApi.init();
 
 export class Main extends React.Component<MainProps, MainState> {
-    playerName : string;
-    spotifyPlayer : any;
-    previousTrackBuffer : number;
-    updatePositionIntervalDelayMs : number;
-    updatePositionInterval : number | null;
+    private playerName : string;
+    private spotifyPlayer : any;
+    private previousTrackBuffer : number;
+    private updatePositionIntervalDelayMs : number;
+    private updatePositionInterval? : number;
+    private onAuthChangedWatcher?: () => void;
     
     constructor(props: MainProps) {
         super(props);
@@ -40,7 +41,6 @@ export class Main extends React.Component<MainProps, MainState> {
         this.spotifyPlayer = null;
         this.previousTrackBuffer = 3000; // The amount of time in ms until clicking "previous" will go to the previous track (other seek to start)
         this.updatePositionIntervalDelayMs = 100;
-        this.updatePositionInterval = null;
     }
 
     readonly state: MainState = {
@@ -48,7 +48,7 @@ export class Main extends React.Component<MainProps, MainState> {
         sdkReady: false,
         playerReady: false,
         playing: false,
-        playbackState: null,
+        playbackState: undefined,
         position: 0,
         volume: 100,
         preMuteVolume: 100,
@@ -132,7 +132,7 @@ export class Main extends React.Component<MainProps, MainState> {
     startUpdatePositionInterval() {
         this.cancelUpdatePositionInterval();
         
-        this.updatePositionInterval = setInterval(
+        this.updatePositionInterval = window.setInterval(
             this.updatePosition.bind(this),
             this.updatePositionIntervalDelayMs
         );
@@ -141,13 +141,13 @@ export class Main extends React.Component<MainProps, MainState> {
     cancelUpdatePositionInterval() {
         if (this.updatePositionInterval) {
             clearInterval(this.updatePositionInterval);
-            this.updatePositionInterval = null;
+            delete this.updatePositionInterval;
         }
     }
 
     updatePosition() {
         this.spotifyPlayer.getCurrentState()
-            .then((currentState) => {
+            .then((currentState: PlaybackState) => {
                 let position = 0;
         
                 if (currentState) {
@@ -190,7 +190,7 @@ export class Main extends React.Component<MainProps, MainState> {
 
     previousTrack() {
         return this.getCurrentState()
-            .then((state) => {
+            .then((state: PlaybackState) => {
                 if (state && state.position < this.previousTrackBuffer) {
                     return this.spotifyPlayer.previousTrack();
                 } else {
@@ -203,11 +203,11 @@ export class Main extends React.Component<MainProps, MainState> {
         return this.spotifyPlayer.nextTrack();
     }
 
-    seek(newPosition) {
+    seek(newPosition: number) {
         this.spotifyPlayer.seek(newPosition);
     }
 
-    updateVolume(newVolume) {
+    updateVolume(newVolume: number) {
         this.spotifyPlayer.setVolume(newVolume);
         
         this.setState({
@@ -239,15 +239,15 @@ export class Main extends React.Component<MainProps, MainState> {
         this.nextTrack();
     }
 
-    handleSeek(newPosition) {
+    handleSeek(newPosition: number) {
         this.seek(newPosition);
     }
     
-    handleVolumeChanged(event, newVolume) {
+    handleVolumeChanged(event: object, newVolume: number) {
         this.updateVolume(newVolume);
     }
 
-    handleMuteClicked(event) {
+    handleMuteClicked(event: object) {
         this.toggleMute();
     }
 
@@ -295,7 +295,6 @@ export class Main extends React.Component<MainProps, MainState> {
                 }
 
                 <PlaybackControls
-                    player={ this.player }
                     playbackState={ this.state.playbackState }
                     ready={ !!(this.state.isAuthed && this.readyToRender()) }
                     playing={ this.state.playing }

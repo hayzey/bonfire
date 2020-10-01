@@ -1,13 +1,14 @@
 import './AllTracks.scss';
 
 import React from 'react';
+import { PlaybackState } from '../../services/SpotifyPlayer';
 import { SpotifyPlayer } from '../../services/SpotifyPlayer';
 import { SpotifyTrack } from '../../services/SpotifyTrack';
 import { MetaTrack } from '../../services/SpotifyTrack';
 import { TrackList } from '../TrackList/TrackList';
 
 interface AllTracksProps {
-    playbackState: object
+    playbackState?: PlaybackState;
 }
 
 interface AllTracksState {
@@ -15,16 +16,6 @@ interface AllTracksState {
 }
 
 export class AllTracks extends React.Component<AllTracksProps, AllTracksState> {
-    // constructor(props: object) {
-    //     super(props);
-
-    //     this.state = {
-    //         tracks: []
-    //     };
-
-    //     this.handlePlayTrack = this.handlePlayTrack.bind(this);
-    // }
-
     readonly state: AllTracksState = {
         tracks: []
     };
