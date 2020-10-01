@@ -5,10 +5,18 @@ import {
     Route,
 } from 'react-router-dom';
 
-import { BfMain } from '../BfMain/BfMain';
-import { BfSpotifyAuthSuccess } from '../BfSpotifyAuthSuccess/BfSpotifyAuthSuccess';
+import { Main } from '../Main/Main';
+import { SpotifyAuthSuccess } from '../SpotifyAuthSuccess/SpotifyAuthSuccess';
+import { Spotify } from '../../services/SpotifyPlayer';
 
 import './App.scss';
+
+declare global {
+    interface Window {
+        onSpotifyWebPlaybackSDKReady: any;
+        Spotify: Spotify;
+    }
+}
 
 export class App extends React.Component {
     render() {
@@ -17,10 +25,10 @@ export class App extends React.Component {
                 <Router>
                     <Switch>
                         <Route path="/spotify-auth-success">
-                            <BfSpotifyAuthSuccess />
+                            <SpotifyAuthSuccess />
                         </Route>
                         <Route path="/">
-                            <BfMain />
+                            <Main />
                         </Route>
                     </Switch>
                 </Router>
