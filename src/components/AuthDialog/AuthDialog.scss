@@ -1,0 +1,31 @@
+$primary-color: #FF9C61;
+
+.bf-auth-dialog {
+    .dialog-header {
+        padding: 16px;
+    }
+
+    .dialog-content {
+        padding: 0 16px 24px 16px;
+
+        p {
+            margin: 8px 0;
+        }
+
+        a {
+            color: $primary-color;
+        }
+    }
+
+    .close-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+    }
+
+    .login-button {
+        @media screen and (max-width: 400px) {
+            width: 100%;
+        }
+    }
+}
