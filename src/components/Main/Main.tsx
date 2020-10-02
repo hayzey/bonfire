@@ -231,27 +231,27 @@ export class Main extends React.Component<MainProps, MainState> {
         }
     }    
 
-    handleTogglePlayClicked() {
+    handleTogglePlayClicked = () => {
         this.togglePlay();
     }
 
-    handlePreviousTrackClicked() {
+    handlePreviousTrackClicked = () => {
         this.previousTrack();
     }
 
-    handleNextTrackClicked() {
+    handleNextTrackClicked = () => {
         this.nextTrack();
     }
 
-    handleSeek(newPosition: number | number[]) {
+    handleSeek = (newPosition: number | number[]) => {
         this.seek(newPosition);
     }
     
-    handleVolumeChanged(newVolume: number | number[]) {
+    handleVolumeChanged = (newVolume: number | number[]) => {
         this.updateVolume(newVolume);
     }
 
-    handleMuteClicked() {
+    handleMuteClicked = () => {
         this.toggleMute();
     }
 
