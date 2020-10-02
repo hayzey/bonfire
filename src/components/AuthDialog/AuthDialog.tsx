@@ -14,12 +14,6 @@ interface AuthDialogProps {
 }
 
 export class AuthDialog extends React.Component<AuthDialogProps> {
-    // constructor(props) {
-    //     super(props);
-        
-    //     this.handleLoginClick = this.handleLoginClick.bind(this);
-    // }
-
     handleLoginClick(): void {
         AuthService.authorize();
     }
@@ -38,7 +32,7 @@ export class AuthDialog extends React.Component<AuthDialogProps> {
                 <DialogContent className="dialog-content">
                     <p>Please log in with Spotify to continue. You must have a Spotify Premium membership to use this app!</p>
                     <p>
-                        <a href="https://www.spotify.com/premium/" target="_blank">
+                        <a href="https://www.spotify.com/premium/">
                             Learn more about Spotify Premium...
                         </a>
                     </p>

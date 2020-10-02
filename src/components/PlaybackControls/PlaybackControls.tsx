@@ -13,15 +13,39 @@ interface PlaybackControlsProps {
     playing: boolean;
     position: number;
     volume: number;
-    onSeek: (newPosition: number) => void;
-    onPreviousTrackClicked: (event: object) => void;
-    onTogglePlayClicked: (event: object) => void;
-    onNextTrackClicked: (event: object) => void;
-    onVolumeChanged: (event: object, newVolume: number) => void;
-    onMuteClicked: (event: object) => void;
+    onSeek: (newPosition: number | number[]) => void;
+    onPreviousTrackClicked: () => void;
+    onTogglePlayClicked: () => void;
+    onNextTrackClicked: () => void;
+    onVolumeChanged: (newVolume: number | number[]) => void;
+    onMuteClicked: () => void;
 }
 
 export class PlaybackControls extends React.Component<PlaybackControlsProps> {
+    handleSeek(newPosition: number | number[]) {
+        this.props.onSeek(newPosition);
+    }
+
+    handlePreviousTrackClicked() {
+        this.props.onPreviousTrackClicked();
+    }
+
+    handleTogglePlayClicked() {
+        this.props.onTogglePlayClicked();
+    }
+
+    handleNextTrackClicked() {
+        this.props.onNextTrackClicked();
+    }
+
+    handleVolumeChanged(newVolume: number | number[]) {
+        this.props.onVolumeChanged(newVolume);
+    }
+
+    handleMuteClicked() {
+        this.props.onMuteClicked();
+    }
+
     render() {
         return (
             <section className="bf-playback-controls">
@@ -33,9 +57,9 @@ export class PlaybackControls extends React.Component<PlaybackControlsProps> {
                 <div className="primary-controls">
                     <PlaybackControlsPrimary
                         ready={ this.props.ready }
-                        onPreviousTrackClicked={ this.props.onPreviousTrackClicked }
-                        onTogglePlayClicked={ this.props.onTogglePlayClicked }
-                        onNextTrackClicked={ this.props.onNextTrackClicked }
+                        onPreviousTrackClicked={ this.handlePreviousTrackClicked }
+                        onTogglePlayClicked={ this.handleTogglePlayClicked }
+                        onNextTrackClicked={ this.handleNextTrackClicked }
                         playing={ this.props.playing }
                     />
 
@@ -43,15 +67,15 @@ export class PlaybackControls extends React.Component<PlaybackControlsProps> {
                         ready={ this.props.ready }
                         playbackState={ this.props.playbackState }
                         position={ this.props.position }
-                        onSeek={ this.props.onSeek}
+                        onSeek={ this.handleSeek }
                     />
                 </div>
 
                 <PlaybackControlsSecondary
                     ready={ this.props.ready }
                     volume={ this.props.volume }
-                    onVolumeChanged={ this.props.onVolumeChanged }
-                    onMuteClicked={ this.props.onMuteClicked }
+                    onVolumeChanged={ this.handleVolumeChanged }
+                    onMuteClicked={ this.handleMuteClicked }
                 />
             </section>
         );

@@ -2,6 +2,7 @@ import './Main.scss';
 import React from 'react';
 
 import { AuthService } from '../../services/AuthService';
+import { OnAuthChangedCallback } from '../../services/AuthService';
 import { SpotifyApi } from '../../services/SpotifyApi';
 import { SpotifyDevice } from '../../services/SpotifyDevice';
 import { PlaybackState } from '../../services/SpotifyPlayer';
@@ -27,12 +28,12 @@ interface MainProps {}
 SpotifyApi.init();
 
 export class Main extends React.Component<MainProps, MainState> {
-    private playerName : string;
-    private spotifyPlayer : any;
-    private previousTrackBuffer : number;
-    private updatePositionIntervalDelayMs : number;
-    private updatePositionInterval? : number;
-    private onAuthChangedWatcher?: () => void;
+    playerName : string;
+    spotifyPlayer : any;
+    previousTrackBuffer : number;
+    updatePositionIntervalDelayMs : number;
+    updatePositionInterval? : number;
+    onAuthChangedWatcher?: () => void;
     
     constructor(props: MainProps) {
         super(props);
@@ -60,7 +61,7 @@ export class Main extends React.Component<MainProps, MainState> {
             
             const spotifyPlayer : PlayerInterface = new Spotify.Player({
                 name: this.playerName,
-                getOAuthToken: (cb: (token: string) => {}) => {
+                getOAuthToken: (cb: (token: string | null) => {}) => {
                     let token = AuthService.getSpotifyAuthToken();
                     cb(token);
                 }
@@ -203,15 +204,18 @@ export class Main extends React.Component<MainProps, MainState> {
         return this.spotifyPlayer.nextTrack();
     }
 
-    seek(newPosition: number) {
-        this.spotifyPlayer.seek(newPosition);
+    seek(newPosition: number | number[]) {
+        let pos = Array.isArray(newPosition) ? newPosition[0] : newPosition;
+        this.spotifyPlayer.seek(pos);
     }
 
-    updateVolume(newVolume: number) {
-        this.spotifyPlayer.setVolume(newVolume);
+    updateVolume(newVolume: number | number[]) {
+        let volume = Array.isArray(newVolume) ? newVolume[0] : newVolume;
+        
+        this.spotifyPlayer.setVolume(volume);
         
         this.setState({
-            volume: newVolume
+            volume: volume
         });
     }
 
@@ -239,24 +243,26 @@ export class Main extends React.Component<MainProps, MainState> {
         this.nextTrack();
     }
 
-    handleSeek(newPosition: number) {
+    handleSeek(newPosition: number | number[]) {
         this.seek(newPosition);
     }
     
-    handleVolumeChanged(event: object, newVolume: number) {
+    handleVolumeChanged(newVolume: number | number[]) {
         this.updateVolume(newVolume);
     }
 
-    handleMuteClicked(event: object) {
+    handleMuteClicked() {
         this.toggleMute();
     }
 
     componentDidMount() {
-        this.onAuthChangedWatcher = AuthService.onAuthChanged((isAuthed) => {
+        let callback: OnAuthChangedCallback = (isAuthed: boolean) => {
             this.setState({
                 isAuthed: !!isAuthed
             });
-        });
+        };
+        
+        this.onAuthChangedWatcher = AuthService.onAuthChanged(callback);
         
         this.init();
     }

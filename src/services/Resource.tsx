@@ -2,21 +2,17 @@ import axios from 'axios';
 import { extend } from 'lodash';
 
 export class Resource {
-    constructor() {
-        this.url = '';
-    }
-
-    /* STATIC METHODS */
+    static url: string = '';
     
-    static resolveUrlWithParams(url, params = {}) {
+    static resolveUrlWithParams(url: string, params: any = {}) {
         if (!url) {
-            throw new Error('Error handling URL', url);
+            throw new Error('Error handling URL');
         }
 
         let _url = url;
 
         for (let key in params) {
-            let value = params[key];
+            let value : string = params[key];
 
             if (_url.includes(`:${key}`)) {
                 _url = _url.replace(`:${key}`, value);
@@ -28,13 +24,13 @@ export class Resource {
         return _url;
     }
 
-    static addQueryParamToUrl(url, key, value) {
+    static addQueryParamToUrl(url: string, key: string, value: string) {
         let _url = new URL(url);
         _url.searchParams.append(key, value);
         return _url.toString();
     }
 
-    static getInstanceMethodParams(resource, params) {
+    static getInstanceMethodParams(resource: Resource, params: object) {
         let _params = {};
         extend(_params, resource, params);
         return _params;
@@ -81,44 +77,44 @@ export class Resource {
 
     /* INSTANCE METHODS */
     get(params = {}) {
-        let _params = this.getInstanceMethodParams(this, params);
+        let _params = Resource.getInstanceMethodParams(this, params);
         
         return axios.get(
-            this.resolveUrlWithParams(this.url, _params)
+            Resource.resolveUrlWithParams(Resource.url, _params)
         );
     }
 
     delete(params = {}) {
-        let _params = this.getInstanceMethodParams(this, params);
+        let _params = Resource.getInstanceMethodParams(this, params);
         
         return axios.delete(
-            this.resolveUrlWithParams(this.url, _params)
+            Resource.resolveUrlWithParams(Resource.url, _params)
         );
     }
     
     post(params = {}, body = {}) {
-        let _params = this.getInstanceMethodParams(this, params);
+        let _params = Resource.getInstanceMethodParams(this, params);
         
         return axios.post(
-            this.resolveUrlWithParams(this.url, _params),
+            Resource.resolveUrlWithParams(Resource.url, _params),
             body
         );
     }
     
     patch(params = {}, body = {}) {
-        let _params = this.getInstanceMethodParams(this, params);
+        let _params = Resource.getInstanceMethodParams(this, params);
         
         return axios.patch(
-            this.resolveUrlWithParams(this.url, _params),
+            Resource.resolveUrlWithParams(Resource.url, _params),
             body
         );
     }
     
     put(params = {}, body = {}) {
-        let _params = this.getInstanceMethodParams(this, params);
+        let _params = Resource.getInstanceMethodParams(this, params);
         
         return axios.put(
-            this.resolveUrlWithParams(this.url, _params),
+            Resource.resolveUrlWithParams(Resource.url, _params),
             body
         );
     }

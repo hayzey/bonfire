@@ -1,17 +1,18 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 import { AuthService } from '../../services/AuthService';
 
-export class SpotifyAuthSuccess extends React.Component {
-    constructor(props) {
-        super(props);
+interface SpotifyAuthSuccessProps {}
 
-        this.state = {
-            done: false
-        };
-    }
+interface SpotifyAuthSuccessState {
+    done: boolean;
+}
+
+export class SpotifyAuthSuccess extends React.Component<SpotifyAuthSuccessProps, SpotifyAuthSuccessState> {
+    readonly state: SpotifyAuthSuccessState = {
+        done: false
+    };
 
     getHashValues() {
         let hash = window.location.hash;
@@ -21,7 +22,7 @@ export class SpotifyAuthSuccess extends React.Component {
         }
 
         let hashValsArr = hash.split('&');
-        let hashValsObj = {};
+        let hashValsObj : any = {};
         
         for (let hashKeyAndVal of hashValsArr) {
             let keyAndValArr = hashKeyAndVal.split('=');

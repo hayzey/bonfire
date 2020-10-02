@@ -11,9 +11,9 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 interface PlaybackControlsPrimaryProps {
     ready: boolean;
     playing: boolean;
-    onPreviousTrackClicked: (event: object) => void;
-    onTogglePlayClicked: (event: object) => void;
-    onNextTrackClicked: (event: object) => void;
+    onPreviousTrackClicked: () => void;
+    onTogglePlayClicked: () => void;
+    onNextTrackClicked: () => void;
 }
 
 export class PlaybackControlsPrimary extends React.Component<PlaybackControlsPrimaryProps> {
@@ -24,7 +24,6 @@ export class PlaybackControlsPrimary extends React.Component<PlaybackControlsPri
                     className="previous-track-button"
                     disabled={ !this.props.ready }
                     onClick={this.props.onPreviousTrackClicked}
-                    variant="outlined"
                     color="primary">
                     <SkipPreviousIcon />
                 </IconButton>
@@ -32,7 +31,6 @@ export class PlaybackControlsPrimary extends React.Component<PlaybackControlsPri
                     className="toggle-play-button"
                     disabled={ !this.props.ready }
                     onClick={this.props.onTogglePlayClicked}
-                    variant="outlined"
                     color="primary">
                     { this.props.playing ? <PauseIcon /> : <PlayArrowIcon /> }
                 </IconButton>
@@ -40,7 +38,6 @@ export class PlaybackControlsPrimary extends React.Component<PlaybackControlsPri
                     className="next-track-button"
                     disabled={ !this.props.ready }
                     onClick={this.props.onNextTrackClicked}
-                    variant="outlined"
                     color="primary">
                     <SkipNextIcon />
                 </IconButton>

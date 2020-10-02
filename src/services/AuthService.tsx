@@ -3,10 +3,12 @@ import Cookies from 'js-cookie';
 import { AuthSpotifyService } from './AuthSpotifyService';
 
 const SPOTIFY_AUTH_TOKEN_COOKIE_KEY = 'spotify-token';
-let SPOTIFY_AUTH_TOKEN = null;
+let SPOTIFY_AUTH_TOKEN : (string | null) = null;
+
+export type OnAuthChangedCallback = (isAuthed: boolean) => any;
 
 export class AuthService {
-    static onAuthChangedWatchers = [];
+    static onAuthChangedWatchers: Array<OnAuthChangedCallback> = [];
     
     static get spotifyAuthTokenCookieKey() {
         return SPOTIFY_AUTH_TOKEN_COOKIE_KEY;
@@ -14,14 +16,14 @@ export class AuthService {
 
     static getSpotifyAuthToken() {
         if (!SPOTIFY_AUTH_TOKEN) {
-            SPOTIFY_AUTH_TOKEN = Cookies.get(SPOTIFY_AUTH_TOKEN_COOKIE_KEY);
+            SPOTIFY_AUTH_TOKEN = Cookies.get(SPOTIFY_AUTH_TOKEN_COOKIE_KEY) || null;
             this.updateAuthedStatus();
         }
 
         return SPOTIFY_AUTH_TOKEN;
     }
 
-    static setSpotifyAuthToken(authToken) {
+    static setSpotifyAuthToken(authToken: string) {
         SPOTIFY_AUTH_TOKEN = authToken;
         Cookies.set(this.spotifyAuthTokenCookieKey, authToken);
         this.updateAuthedStatus();
@@ -45,9 +47,8 @@ export class AuthService {
         this.removeSpotifyAuthToken();
     }
 
-    static onAuthChanged(callback: (isAuthed: boolean) => any) {
+    static onAuthChanged(callback: OnAuthChangedCallback) {
         this.onAuthChangedWatchers.push(callback);
-
         
         let destroyer = () => {
             let index = this.onAuthChangedWatchers.indexOf(callback);
