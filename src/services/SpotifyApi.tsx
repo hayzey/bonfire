@@ -1,9 +1,17 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { AuthService } from './AuthService';
 
-export class SpotifyApi {
-    constructor() {}
+export interface AuthRequestSuccessConfigHeaders {
+    'Authorization'?: string;
+    'Content-Type'?: string;
+}
 
+// export interface AuthRequestSuccessConfig {
+//     url: string;
+//     headers: AuthRequestSuccessConfigHeaders;
+// }
+
+export class SpotifyApi {
     static spotifyApiUrl = 'https://api.spotify.com/v1/';
 
     static init() {
@@ -14,6 +22,9 @@ export class SpotifyApi {
         axios.interceptors.request.use(
             this.authRequestSuccessInterceptor.bind(this)
         );
+
+        // let requestInterceptor = (config: AxiosRequestConfig) => SpotifyApi.authRequestSuccessInterceptor(config);
+        // axios.interceptors.request.use(requestInterceptor);
         
         axios.interceptors.response.use(
             this.authResponseSuccessInterceptor.bind(this),
@@ -22,8 +33,8 @@ export class SpotifyApi {
     }
 
     // Adds the appropriate headers to any Spotify API requests
-    static authRequestSuccessInterceptor(config) {
-        if (config.url.includes(this.spotifyApiUrl)) {
+    static authRequestSuccessInterceptor(config: AxiosRequestConfig) {
+        if (config?.url?.includes(this.spotifyApiUrl)) {
             const token = AuthService.getSpotifyAuthToken();
             
             if (token) {
@@ -37,15 +48,15 @@ export class SpotifyApi {
     }
     
     // Handles success responses.
-    static authResponseSuccessInterceptor(config) {
+    static authResponseSuccessInterceptor(config: AxiosResponse) {
         return config;
     }
 
     // Handles error responses from the Spotify API, including logging the user
     // out if there is a 401 response (user's auth session is invalid).
-    static authResponseErrorInterceptor(error) {
+    static authResponseErrorInterceptor(error: AxiosError) {
         if (
-            error?.response?.config?.url.includes(this.spotifyApiUrl) &&
+            error?.response?.config?.url?.includes(this.spotifyApiUrl) &&
             error?.response?.status === 401
         ) {
             AuthService.logOut();

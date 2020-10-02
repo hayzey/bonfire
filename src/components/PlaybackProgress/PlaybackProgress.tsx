@@ -12,21 +12,15 @@ interface PlaybackProgressProps {
 }
 
 export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
-    constructor(props: PlaybackProgressProps) {
-        super(props);
-        
-        this.handleProgressSlider = this.handleProgressSlider.bind(this);
-    }
-
-    getPosition() {
+    getPosition() : number {
         return this.props?.position || 0;
     }
 
-    getDuration() {
+    getDuration() : number {
         return this.props?.playbackState?.duration || 0;
     }
 
-    getPositionPercentage() {
+    getPositionPercentage() : number {
         const position = this.getPosition();
         const duration = this.getDuration();
 
@@ -37,19 +31,20 @@ export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
         return position / duration * 100;
     }
 
-    convertMsToDisplayString(ms) {
+    convertMsToDisplayString(ms : number) : string {
         if (typeof ms !== 'number') {
             return '0:00';
         }
 
         let secs = ms / 1000;
         let displayMins = String(Math.floor(secs / 60));
-        let displaySecs = Math.floor(secs % 60);
+        let secsInMinute = Math.floor(secs % 60);
+        let displaySecs : string;
 
-        if (displaySecs < 10) {
-            displaySecs = `0${displaySecs}`;
+        if (secsInMinute < 10) {
+            displaySecs = `0${secsInMinute}`;
         } else {
-            displaySecs = String(displaySecs);
+            displaySecs = String(secsInMinute);
         }
 
         let result = `${displayMins}:${displaySecs}`;
@@ -65,9 +60,9 @@ export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
         return this.convertMsToDisplayString(this.getDuration());
     }
 
-    handleProgressSlider(event, newPosition) {
-        this.props.onSeek(newPosition);
-    }
+    // handleSeek(event : object, newPosition: number | number[]) {
+    //     this.props.onSeek(newPosition);
+    // }
 
     render() {
         return (
@@ -77,10 +72,10 @@ export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
                     <Slider
                         className="track-position-slider"
                         disabled={ !this.props.ready }
-                        value={this.getPosition()}
-                        min={0}
-                        max={this.getDuration()}
-                        onChangeCommitted={this.handleProgressSlider}
+                        value={ this.getPosition() }
+                        min={ 0 }
+                        max={ this.getDuration() }
+                        // onChangeCommitted={ this.handleSeek }
                     />
                 </div>
                 <p className="progress-value">{ this.getDisplayDuration() }</p>

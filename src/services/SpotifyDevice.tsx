@@ -9,7 +9,7 @@ export class SpotifyDevice extends Resource {
         return `${SpotifyApi.spotifyApiUrl}me/player`;
     };
 
-    static setAsCurrentDevice(deviceId) {
+    static setAsCurrentDevice(deviceId: string) {
         let requestBody = {
             device_ids: [deviceId]
         };

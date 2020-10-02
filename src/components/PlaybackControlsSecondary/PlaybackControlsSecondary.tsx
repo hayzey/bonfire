@@ -11,8 +11,8 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 interface PlaybackControlsSecondaryProps {
     ready: boolean;
     volume: number;
-    onMuteClicked: (event: object) => void;
-    onVolumeChanged: (event: object, newVolume: number) => void;
+    onMuteClicked: () => void;
+    onVolumeChanged: (newVolume: number | number[]) => void;
 }
 
 export class PlaybackControlsSecondary extends React.Component<PlaybackControlsSecondaryProps> {
@@ -30,6 +30,14 @@ export class PlaybackControlsSecondary extends React.Component<PlaybackControlsS
         }
     }
 
+    handleMuteClicked(event: object) {
+        this.props.onMuteClicked();
+    }
+
+    handleVolumeChanged(event: object, newVolume: number | number[]) {
+        this.props.onVolumeChanged(newVolume);
+    }
+
     render() {
         return (
             <div className="bf-playback-controls-secondary">
@@ -37,18 +45,18 @@ export class PlaybackControlsSecondary extends React.Component<PlaybackControlsS
                     <IconButton
                         className="toggle-mute-button"
                         disabled={ !this.props.ready }
-                        onClick={this.props.onMuteClicked}
+                        onClick={ this.handleMuteClicked }
                         size="small">
                         { this.getVolumeLevelIcon() }
                     </IconButton>
                     <Slider
                         className="volume-slider"
                         disabled={ !this.props.ready }
-                        value={this.props.volume}
-                        min={0}
-                        max={1}
-                        step={0.01}
-                        onChange={this.props.onVolumeChanged}
+                        value={ this.props.volume }
+                        min={ 0 }
+                        max={ 1 }
+                        step={ 0.01 }
+                        onChange={ this.handleVolumeChanged }
                     />
                 </div>
             </div>

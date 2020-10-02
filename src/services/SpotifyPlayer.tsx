@@ -20,6 +20,7 @@ export interface PlaybackState {
     track_window: PlaybackStateTrackWindow;
     paused: boolean;
     position: number;
+    duration: number;
 }
 
 export class SpotifyPlayer extends Resource {

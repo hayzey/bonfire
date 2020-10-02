@@ -43,14 +43,34 @@ export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps> {
         return Array.isArray(album.images) && album.images[0];
     }
 
-    getAlbumImageUrl() {
+    getAlbumImageUrl() : string | undefined {
         let albumImage = this.getAlbumImage();
 
         if (!albumImage) {
             return;
         }
         
-        return albumImage?.url;
+        return albumImage.url;
+    }
+
+    getAlbumName() : string | undefined {
+        let album = this.getAlbum();
+
+        if (!album) {
+            return;
+        }
+        
+        return album.name;
+    }
+
+    getAlbumImageAltText() : string {
+        let albumName = this.getAlbumName();
+
+        if (albumName) {
+            return `Album cover for ${albumName}`;
+        }
+
+        return 'Album cover loading...';
     }
 
     render() {
@@ -62,7 +82,9 @@ export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps> {
                     <div className="album-cover-container">
                         <img
                             className="album-cover"
-                            src={this.getAlbumImageUrl() } />
+                            src={ this.getAlbumImageUrl() }
+                            alt={ this.getAlbumImageAltText() }
+                        />
                     </div>
                     <div className="main-track-info">
                         <p className="track-name">{ this.getTrackName() }</p>
