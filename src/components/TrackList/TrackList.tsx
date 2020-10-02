@@ -72,7 +72,7 @@ export class TrackList extends React.Component<TrackListProps, TrackListState> {
         this.props.onPlayTrack(metaTrack);
     }
 
-    handleTrackDoubleClick(metaTrack: MetaTrack) {
+    handleTrackDoubleClick = (metaTrack: MetaTrack) => {
         this.playTrack(metaTrack);
     }
     

@@ -17,27 +17,39 @@ interface PlaybackControlsPrimaryProps {
 }
 
 export class PlaybackControlsPrimary extends React.Component<PlaybackControlsPrimaryProps> {
+    handlePreviousTrackClicked = () => {
+        this.props.onPreviousTrackClicked();
+    }
+
+    handleTogglePlayClicked = () => {
+        this.props.onTogglePlayClicked();
+    }
+
+    handleNextTrackClicked = () => {
+        this.props.onNextTrackClicked();
+    }
+    
     render() {
         return (
             <div className="bf-playback-controls-primary">
                 <IconButton
                     className="previous-track-button"
                     disabled={ !this.props.ready }
-                    onClick={this.props.onPreviousTrackClicked}
+                    onClick={ this.handlePreviousTrackClicked }
                     color="primary">
                     <SkipPreviousIcon />
                 </IconButton>
                 <IconButton
                     className="toggle-play-button"
                     disabled={ !this.props.ready }
-                    onClick={this.props.onTogglePlayClicked}
+                    onClick={ this.handleTogglePlayClicked }
                     color="primary">
                     { this.props.playing ? <PauseIcon /> : <PlayArrowIcon /> }
                 </IconButton>
                 <IconButton
                     className="next-track-button"
                     disabled={ !this.props.ready }
-                    onClick={this.props.onNextTrackClicked}
+                    onClick={ this.handleNextTrackClicked }
                     color="primary">
                     <SkipNextIcon />
                 </IconButton>

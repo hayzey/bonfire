@@ -30,11 +30,11 @@ export class PlaybackControlsSecondary extends React.Component<PlaybackControlsS
         }
     }
 
-    handleMuteClicked(event: object) {
+    handleMuteClicked = (event: object) => {
         this.props.onMuteClicked();
     }
 
-    handleVolumeChanged(event: object, newVolume: number | number[]) {
+    handleVolumeChanged = (event: object, newVolume: number | number[]) => {
         this.props.onVolumeChanged(newVolume);
     }
 

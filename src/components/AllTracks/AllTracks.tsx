@@ -39,7 +39,7 @@ export class AllTracks extends React.Component<AllTracksProps, AllTracksState> {
         SpotifyPlayer.playTracks([trackUri]);
     }
 
-    handlePlayTrack(metaTrack: MetaTrack) {
+    handlePlayTrack = (metaTrack: MetaTrack) => {
         this.playTrack(metaTrack);
     }
 

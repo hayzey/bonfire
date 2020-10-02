@@ -22,27 +22,27 @@ interface PlaybackControlsProps {
 }
 
 export class PlaybackControls extends React.Component<PlaybackControlsProps> {
-    handleSeek(newPosition: number | number[]) {
+    handleSeek = (newPosition: number | number[]) => {
         this.props.onSeek(newPosition);
     }
 
-    handlePreviousTrackClicked() {
+    handlePreviousTrackClicked = () => {
         this.props.onPreviousTrackClicked();
     }
 
-    handleTogglePlayClicked() {
+    handleTogglePlayClicked = () => {
         this.props.onTogglePlayClicked();
     }
 
-    handleNextTrackClicked() {
+    handleNextTrackClicked = () => {
         this.props.onNextTrackClicked();
     }
 
-    handleVolumeChanged(newVolume: number | number[]) {
+    handleVolumeChanged = (newVolume: number | number[]) => {
         this.props.onVolumeChanged(newVolume);
     }
 
-    handleMuteClicked() {
+    handleMuteClicked = () => {
         this.props.onMuteClicked();
     }
 

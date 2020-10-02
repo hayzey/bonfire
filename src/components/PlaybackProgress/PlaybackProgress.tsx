@@ -8,7 +8,7 @@ interface PlaybackProgressProps {
     playbackState?: PlaybackState;
     ready: boolean;
     position: number;
-    onSeek: (newPosition: number) => void;
+    onSeek: (newPosition: number | number[]) => void;
 }
 
 export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
@@ -52,17 +52,17 @@ export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
         return result;
     }
 
-    getDisplayPosition() {
+    getDisplayPosition() : string {
         return this.convertMsToDisplayString(this.getPosition());
     }
 
-    getDisplayDuration() {
+    getDisplayDuration() : string {
         return this.convertMsToDisplayString(this.getDuration());
     }
 
-    // handleSeek(event : object, newPosition: number | number[]) {
-    //     this.props.onSeek(newPosition);
-    // }
+    handleSeek = (event : object, newPosition: number | number[]) : void => {
+        this.props.onSeek(newPosition);
+    }
 
     render() {
         return (
@@ -75,7 +75,7 @@ export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
                         value={ this.getPosition() }
                         min={ 0 }
                         max={ this.getDuration() }
-                        // onChangeCommitted={ this.handleSeek }
+                        onChangeCommitted={ this.handleSeek }
                     />
                 </div>
                 <p className="progress-value">{ this.getDisplayDuration() }</p>

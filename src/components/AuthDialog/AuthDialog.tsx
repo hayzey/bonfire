@@ -14,7 +14,7 @@ interface AuthDialogProps {
 }
 
 export class AuthDialog extends React.Component<AuthDialogProps> {
-    handleLoginClick(): void {
+    handleLoginClick = (): void => {
         AuthService.authorize();
     }
 
