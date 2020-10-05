@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - yarn install
+  build:
+    commands:
+      - yarn test --watchAll=false
+      - yarn build
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
