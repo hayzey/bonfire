@@ -5,4 +5,20 @@
         border: 2px solid;
         margin: 0 8px;
     }
+
+    @media screen and (max-width: 400px) {
+        .previous-track-button {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 350px) {
+        .next-track-button {
+            display: none;
+        }
+
+        .toggle-play-button {
+            margin-right: 16px;
+        }
+    }
 }

@@ -36,4 +36,24 @@
             display: none;
         }
     }
+
+    @media screen and (max-width: 600px) {
+        grid-template-columns: minmax(200px, 1fr) auto;
+        
+        .bf-current-track-info {
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+    
+        .bf-playback-controls-primary {
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+        
+        .bf-playback-progress {
+            grid-column-start: 1;
+            grid-column-end: 3;
+            margin: 8px 0 4px 0;
+        }
+    }
 }
