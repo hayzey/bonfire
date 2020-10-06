@@ -87,8 +87,8 @@ export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps> {
                         />
                     </div>
                     <div className="main-track-info">
-                        <p className="track-name">{ this.getTrackName() }</p>
-                        <p className="artist-name">{ this.getTrackArtistName() }</p>
+                        <p className="track-name truncate">{ this.getTrackName() }</p>
+                        <p className="artist-name truncate">{ this.getTrackArtistName() }</p>
                     </div>
                 </div>
             );
