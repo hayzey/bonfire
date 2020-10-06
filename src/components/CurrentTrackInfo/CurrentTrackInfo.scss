@@ -1,4 +1,5 @@
-$album-cover-size: 100px;
+$album-cover-size: 120px;
+$album-cover-size-sm: 60px;
 
 .bf-current-track-info {
     display: grid;
@@ -29,6 +30,7 @@ $album-cover-size: 100px;
 
     .main-track-info {
         padding: 8px 24px;
+        max-width: 250px;
 
         p {
             margin: 0;
@@ -37,5 +39,16 @@ $album-cover-size: 100px;
 
     .track-name {
         font-weight: 500;
+    }
+
+    .artist-name {
+        font-size: 12px;
+    }
+
+    @media screen and (max-width: 600px) {
+        .album-cover-container {
+            width: $album-cover-size-sm;
+            height: $album-cover-size-sm;
+        }
     }
 }
