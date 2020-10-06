@@ -1,4 +1,7 @@
-$album-cover-size: 100px;
+$album-cover-size: 120px;
+$album-cover-size-sm: 60px;
+$album-size-breakpoint: 600px;
+$spinning-album-cover-margin: 8px;
 
 .bf-current-track-info {
     display: grid;
@@ -10,6 +13,43 @@ $album-cover-size: 100px;
         position: relative;
         width: $album-cover-size;
         height: $album-cover-size;
+        overflow: hidden;
+        cursor: pointer;
+
+        &.spinning-record {
+            @media screen and (min-width: $album-size-breakpoint + 1) {
+                width: $album-cover-size - ($spinning-album-cover-margin * 2);
+                height: $album-cover-size - ($spinning-album-cover-margin * 2);
+                margin: $spinning-album-cover-margin;
+                
+                border-radius: 100%;
+                
+                @keyframes spin-record {
+                    from {
+                        transform: rotateZ(0deg);
+                    }
+    
+                    to {
+                        transform: rotateZ(360deg);
+                    }
+                }
+    
+                animation: spin-record 4s linear infinite;
+                
+                &:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    background-color: #111;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 100%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
     }
 
     .album-cover {
@@ -29,6 +69,7 @@ $album-cover-size: 100px;
 
     .main-track-info {
         padding: 8px 24px;
+        max-width: 250px;
 
         p {
             margin: 0;
@@ -37,5 +78,16 @@ $album-cover-size: 100px;
 
     .track-name {
         font-weight: 500;
+    }
+
+    .artist-name {
+        font-size: 12px;
+    }
+
+    @media screen and (max-width: #{$album-size-breakpoint}) {
+        .album-cover-container {
+            width: $album-cover-size-sm;
+            height: $album-cover-size-sm;
+        }
     }
 }
