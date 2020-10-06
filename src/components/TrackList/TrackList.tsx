@@ -7,6 +7,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
 import { PlaybackState } from '../../services/SpotifyPlayer';
 import { MetaTrack } from '../../services/SpotifyTrack';
@@ -72,7 +74,7 @@ export class TrackList extends React.Component<TrackListProps, TrackListState> {
         this.props.onPlayTrack(metaTrack);
     }
 
-    handleTrackDoubleClick = (metaTrack: MetaTrack) => {
+    handleTrackPlayClick = (metaTrack: MetaTrack) => {
         this.playTrack(metaTrack);
     }
     
@@ -83,21 +85,28 @@ export class TrackList extends React.Component<TrackListProps, TrackListState> {
                     <Table aria-label="Tracks">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Title</TableCell>
-                                <TableCell>Artist</TableCell>
-                                <TableCell>Album</TableCell>
+                                <TableCell className="track-play-button-cell"></TableCell>
+                                <TableCell className="track-title-cell">Title</TableCell>
+                                <TableCell className="track-artist-cell">Artist</TableCell>
+                                <TableCell className="track-album-cell">Album</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {this.props.tracks.map((track) => (
                                 <TableRow
                                     className={ this.getTrackRowClasses(track) }
-                                    key={ track.track.id }
-                                    onDoubleClick={ () => this.handleTrackDoubleClick(track) }
-                                >
-                                    <TableCell component="th" scope="row">{ this.getTrackName(track) }</TableCell>
-                                    <TableCell>{ this.getTrackArtistName(track) }</TableCell>
-                                    <TableCell>{ this.getTrackAlbumName(track) }</TableCell>
+                                    key={ track.track.id }>
+                                    <TableCell className="track-play-button-cell">
+                                    <IconButton
+                                        className="track-play-button"
+                                        onClick={ () => this.handleTrackPlayClick(track) }
+                                        size="small">
+                                        <PlayCircleFilledIcon />
+                                    </IconButton>
+                                    </TableCell>
+                                    <TableCell className="track-title-cell" component="th" scope="row">{ this.getTrackName(track) }</TableCell>
+                                    <TableCell className="track-artist-cell">{ this.getTrackArtistName(track) }</TableCell>
+                                    <TableCell className="track-album-cell">{ this.getTrackAlbumName(track) }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
