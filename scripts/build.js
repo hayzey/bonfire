@@ -208,4 +208,7 @@ function copyPublicFolder() {
     dereference: true,
     filter: file => file !== paths.appHtml,
   });
+
+  fs.ensureDir(paths.appBuildEbPlatform);
+  fs.copySync(paths.ebPlatform, paths.appBuildEbPlatform);
 }
