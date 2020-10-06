@@ -8,7 +8,17 @@ interface CurrentTrackInfoProps {
     ready: boolean;
 }
 
-export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps> {
+interface CurrentTrackInfoState {
+    albumCoverSpinning: boolean;
+}
+
+export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps, CurrentTrackInfoState> {
+    albumCoverSpinningClass = 'spinning-record';
+
+    readonly state: CurrentTrackInfoState = {
+        albumCoverSpinning: false
+    };
+    
     getCurrentTrack() {
         return this.props.playbackState?.track_window?.current_track;
     }
@@ -73,13 +83,35 @@ export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps> {
         return 'Album cover loading...';
     }
 
+    toggleAlbumSpinning() {
+        this.setState({
+            albumCoverSpinning: !this.state.albumCoverSpinning
+        });
+    }
+
+    getAlbumCoverClasses() {
+        let classes = 'album-cover-container';
+
+        if (this.state.albumCoverSpinning) {
+            classes += ` ${this.albumCoverSpinningClass}`;
+        }
+
+        return classes;
+    }
+    
+    handleAlbumCoverClicked = () => {
+        this.toggleAlbumSpinning();
+    }
+
     render() {
         let content;
 
         if (this.props.ready) {
             content = (
                 <div className="bf-current-track-info">
-                    <div className="album-cover-container">
+                    <div
+                        className={ this.getAlbumCoverClasses() }
+                        onClick={ this.handleAlbumCoverClicked }>
                         <img
                             className="album-cover"
                             src={ this.getAlbumImageUrl() }
@@ -87,8 +119,8 @@ export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps> {
                         />
                     </div>
                     <div className="main-track-info">
-                        <p className="track-name">{ this.getTrackName() }</p>
-                        <p className="artist-name">{ this.getTrackArtistName() }</p>
+                        <p className="track-name truncate">{ this.getTrackName() }</p>
+                        <p className="artist-name truncate">{ this.getTrackArtistName() }</p>
                     </div>
                 </div>
             );

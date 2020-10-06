@@ -53,23 +53,21 @@ export class PlaybackControls extends React.Component<PlaybackControlsProps> {
                     ready={ this.props.ready }
                     playbackState={ this.props.playbackState }
                 />
+                
+                <PlaybackControlsPrimary
+                    ready={ this.props.ready }
+                    onPreviousTrackClicked={ this.handlePreviousTrackClicked }
+                    onTogglePlayClicked={ this.handleTogglePlayClicked }
+                    onNextTrackClicked={ this.handleNextTrackClicked }
+                    playing={ this.props.playing }
+                />
 
-                <div className="primary-controls">
-                    <PlaybackControlsPrimary
-                        ready={ this.props.ready }
-                        onPreviousTrackClicked={ this.handlePreviousTrackClicked }
-                        onTogglePlayClicked={ this.handleTogglePlayClicked }
-                        onNextTrackClicked={ this.handleNextTrackClicked }
-                        playing={ this.props.playing }
-                    />
-
-                    <PlaybackProgress
-                        ready={ this.props.ready }
-                        playbackState={ this.props.playbackState }
-                        position={ this.props.position }
-                        onSeek={ this.handleSeek }
-                    />
-                </div>
+                <PlaybackProgress
+                    ready={ this.props.ready }
+                    playbackState={ this.props.playbackState }
+                    position={ this.props.position }
+                    onSeek={ this.handleSeek }
+                />
 
                 <PlaybackControlsSecondary
                     ready={ this.props.ready }
