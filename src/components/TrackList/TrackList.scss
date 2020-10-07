@@ -17,4 +17,23 @@ $primary-color: #FF9C61;
             color: inherit;
         }
     }
+
+    .track-play-button-cell {
+        width: 0;
+        padding: 0;
+    }
+
+    @media screen and (max-width: 600px) {
+        .track-album-cell {
+            display: none;
+        }
+
+        .track-artist-cell {
+            padding-right: 0;
+        }
+
+        .MuiTableCell-root {
+            font-size: 13px;
+        }
+    }
 }
