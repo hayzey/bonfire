@@ -210,6 +210,6 @@ function copyPublicFolder() {
   });
 
   fs.removeSync(paths.appBuildEbPlatform);
-  fs.ensureDir(paths.appBuildEbPlatform);
+  fs.ensureDirSync(paths.appBuildEbPlatform);
   fs.copySync(paths.ebPlatform, paths.appBuildEbPlatform);
 }
