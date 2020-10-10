@@ -12,20 +12,20 @@ interface AllTracksProps {
 }
 
 interface AllTracksState {
-    tracks: Array<MetaTrack>
+    metaTracks: Array<MetaTrack>
 }
 
 export class AllTracks extends React.Component<AllTracksProps, AllTracksState> {
     readonly state: AllTracksState = {
-        tracks: []
+        metaTracks: []
     };
 
-    addTracksToList(tracks: Array<MetaTrack>) {
-        let _tracks = this.state.tracks.concat(tracks);
+    addTracksToList(metaTracks: Array<MetaTrack>) {
+        let _metaTracks = this.state.metaTracks.concat(metaTracks);
 
         this.setState({
-            tracks: _tracks
-        })
+            metaTracks: _metaTracks
+        });
     }
 
     syncFirstUserTracks() {
@@ -55,7 +55,7 @@ export class AllTracks extends React.Component<AllTracksProps, AllTracksState> {
         return (
             <div className="bf-all-tracks">
                 <TrackList
-                    tracks={this.state.tracks}
+                    metaTracks={this.state.metaTracks}
                     onPlayTrack={this.handlePlayTrack}
                     playbackState={ this.props.playbackState }
                 />
