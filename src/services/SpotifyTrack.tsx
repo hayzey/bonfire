@@ -5,6 +5,7 @@ import { Album } from './SpotifyAlbum';
 import { Artist } from './SpotifyArtist';
 
 export interface MetaTrack {
+    added_at?: string;
     track: Track;
 }
 

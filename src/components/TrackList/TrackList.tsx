@@ -12,14 +12,34 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
 import { PlaybackState } from '../../services/SpotifyPlayer';
 import { MetaTrack } from '../../services/SpotifyTrack';
+import { Track } from '../../services/SpotifyTrack';
 
 interface TrackListProps {
     playbackState?: PlaybackState;
-    metaTracks: Array<MetaTrack>,
-    onPlayTrack: (metaTrack: MetaTrack) => void
+    metaTracks?: Array<MetaTrack>;
+    tracks?: Array<Track>;
+    onPlayTrack: (metaTrack: MetaTrack) => void;
 }
 
 export class TrackList extends React.Component<TrackListProps> {
+    getMetaTracks(): MetaTrack[] {
+        if (this.props.tracks) {
+            let metaTracks: MetaTrack[] = this.props.tracks.map((track) => {
+                let metaTrack: MetaTrack = {
+                    track: track
+                };
+
+                return metaTrack;
+            });
+
+            return metaTracks;
+        } else if (this.props.metaTracks) {
+            return this.props.metaTracks;
+        }
+
+        return [];
+    }
+    
     getTrackName(metaTrack: MetaTrack): string {
         return metaTrack?.track?.name;
     }
@@ -92,7 +112,7 @@ export class TrackList extends React.Component<TrackListProps> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.props.metaTracks.map((metaTrack) => (
+                            {this.getMetaTracks().map((metaTrack) => (
                                 <TableRow
                                     className={ this.getTrackRowClasses(metaTrack) }
                                     onDoubleClick={ () => this.handleTrackDoubleClick(metaTrack) }
