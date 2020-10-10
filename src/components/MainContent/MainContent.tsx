@@ -16,7 +16,7 @@ interface MainContentProps {
 
 export const MainContent: FunctionComponent<MainContentProps> = ({playbackState}) => {
     return (
-        <div className="bf-main-content">
+        <div className="main-content">
             <Router>
                 <Switch>
                     <Route path="/">

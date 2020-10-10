@@ -21,7 +21,7 @@ export class AuthDialog extends React.Component<AuthDialogProps> {
     render() {
         return (
             <Dialog
-                className="bf-auth-dialog"
+                className="auth-dialog"
                 open={this.props.open}
                 maxWidth={"xs"}
                 fullWidth={true}>

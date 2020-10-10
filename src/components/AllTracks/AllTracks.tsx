@@ -53,7 +53,7 @@ export class AllTracks extends React.Component<AllTracksProps, AllTracksState> {
 
     render() {
         return (
-            <div className="bf-all-tracks">
+            <div className="all-tracks">
                 <TrackList
                     metaTracks={this.state.metaTracks}
                     onPlayTrack={this.handlePlayTrack}
