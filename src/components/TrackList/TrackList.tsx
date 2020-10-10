@@ -80,7 +80,7 @@ export class TrackList extends React.Component<TrackListProps> {
     
     render() {
         return (
-            <div className="bf-track-list">
+            <div className="track-list">
                 <TableContainer>
                     <Table aria-label="Tracks">
                         <TableHead>
