@@ -47,10 +47,6 @@ export class PlaybackControls extends React.Component<PlaybackControlsProps> {
         this.props.onMuteClicked();
     }
 
-    handleToggleQueueClicked = () => {
-
-    }
-
     render() {
         return (
             <section className="playback-controls">
@@ -76,7 +72,7 @@ export class PlaybackControls extends React.Component<PlaybackControlsProps> {
 
                 <PlaybackControlsSecondary
                     ready={ this.props.ready }
-                    onToggleQueueClicked={ this.handleToggleQueueClicked }
+                    playbackState={ this.props.playbackState }
                 />
 
                 <VolumeControls

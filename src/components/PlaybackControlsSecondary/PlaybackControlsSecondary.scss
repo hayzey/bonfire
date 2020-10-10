@@ -1,4 +1,5 @@
-// .playback-controls-secondary {
-//     text-align: right;
-//     padding: 0 32px;
-// }
+.playback-controls-secondary {
+    display: grid;
+    grid-template-columns: auto;
+    justify-items: end;
+}
