@@ -5,6 +5,7 @@ import { PlaybackState } from '../../services/SpotifyPlayer';
 import { CurrentTrackInfo } from '../CurrentTrackInfo/CurrentTrackInfo';
 import { PlaybackControlsPrimary } from '../PlaybackControlsPrimary/PlaybackControlsPrimary';
 import { PlaybackControlsSecondary } from '../PlaybackControlsSecondary/PlaybackControlsSecondary';
+import { VolumeControls } from '../VolumeControls/VolumeControls';
 import { PlaybackProgress } from '../PlaybackProgress/PlaybackProgress';
 
 interface PlaybackControlsProps {
@@ -48,7 +49,7 @@ export class PlaybackControls extends React.Component<PlaybackControlsProps> {
 
     render() {
         return (
-            <section className="bf-playback-controls">
+            <section className="playback-controls">
                 <CurrentTrackInfo
                     ready={ this.props.ready }
                     playbackState={ this.props.playbackState }
@@ -70,6 +71,11 @@ export class PlaybackControls extends React.Component<PlaybackControlsProps> {
                 />
 
                 <PlaybackControlsSecondary
+                    ready={ this.props.ready }
+                    playbackState={ this.props.playbackState }
+                />
+
+                <VolumeControls
                     ready={ this.props.ready }
                     volume={ this.props.volume }
                     onVolumeChanged={ this.handleVolumeChanged }

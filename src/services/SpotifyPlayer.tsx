@@ -14,6 +14,8 @@ export interface Spotify {
 
 export interface PlaybackStateTrackWindow {
     current_track: Track;
+    next_tracks: Track[];
+    previous_tracks: Track[];
 }
 
 export interface PlaybackState {

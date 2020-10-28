@@ -1,4 +1,4 @@
-.bf-playback-controls {
+.playback-controls {
     display: grid;
     grid-template-columns: minmax(300px, 1fr) 3fr minmax(250px, 1fr);
     grid-template-rows: auto auto;
@@ -6,25 +6,36 @@
     align-items: center;
     background-color: #111;
 
-    .bf-current-track-info {
+    .current-track-info {
         grid-row-start: 1;
         grid-row-end: 3;
     }
 
-    .bf-playback-controls-primary {
-        margin-top: 16px;
+    .playback-controls-primary {
         grid-row-start: 1;
         grid-row-end: 2;
     }
 
-    .bf-playback-progress {
+    .playback-controls-secondary {
+        text-align: right;
+        padding: 0 32px;
+    }
+
+    .playback-controls-primary,
+    .playback-controls-secondary {
+        margin-top: 16px;
+    }
+
+    .playback-progress {
         grid-row-start: 2;
         grid-row-end: 3;
         padding: 0 16px;
     }
 
-    .bf-playback-controls-secondary {
-        grid-row-start: 1;
+    .volume-controls {
+        margin-bottom: 8px;
+        padding: 8px 40px;
+        grid-row-start: 2;
         grid-row-end: 3;
     }
 
@@ -32,25 +43,25 @@
         grid-template-columns: 300px 1fr;
         grid-template-rows: auto 1fr;
 
-        .bf-playback-controls-secondary {
+        .volume-controls {
             display: none;
         }
     }
 
     @media screen and (max-width: 600px) {
         grid-template-columns: minmax(200px, 1fr) auto;
-        
-        .bf-current-track-info {
+
+        .current-track-info {
             grid-row-start: 1;
             grid-row-end: 1;
         }
-    
-        .bf-playback-controls-primary {
+
+        .playback-controls-primary {
             grid-row-start: 1;
             grid-row-end: 1;
         }
-        
-        .bf-playback-progress {
+
+        .playback-progress {
             grid-column-start: 1;
             grid-column-end: 3;
             margin: 8px 0 4px 0;
