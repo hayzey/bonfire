@@ -21,20 +21,21 @@ export class PlaybackControlsSecondary extends React.Component<PlaybackControlsS
 
     render() {
         return (
-            <div className="playback-controls-secondary">
-                <Button
-                    className="toggle-show-queue-button"
-                    disabled={ !this.props.ready }
-                    onClick={ this.handleToggleQueue }
-                    startIcon={ <QueueMusicIcon /> }>
-                    <span>Queue</span>
-                </Button>
-                <Queue
-                    playbackState={ this.props.playbackState }
-                    queueOpen={ this.queueOpen }
-                    onToggleQueue={ this.handleToggleQueue }>
-                </Queue>
-            </div>
+            <div></div>
+            // <div className="playback-controls-secondary">
+            //     <Button
+            //         className="toggle-show-queue-button"
+            //         disabled={ !this.props.ready }
+            //         onClick={ this.handleToggleQueue }
+            //         startIcon={ <QueueMusicIcon /> }>
+            //         <span>Queue</span>
+            //     </Button>
+            //     <Queue
+            //         playbackState={ this.props.playbackState }
+            //         queueOpen={ this.queueOpen }
+            //         onToggleQueue={ this.handleToggleQueue }>
+            //     </Queue>
+            // </div>
         );
     }
 }
