@@ -108,7 +108,7 @@ export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps, Cur
 
         if (this.props.ready) {
             content = (
-                <div className="bf-current-track-info">
+                <div className="current-track-info">
                     <div
                         className={ this.getAlbumCoverClasses() }
                         onClick={ this.handleAlbumCoverClicked }>
@@ -126,7 +126,7 @@ export class CurrentTrackInfo extends React.Component<CurrentTrackInfoProps, Cur
             );
         } else {
             content = (
-                <div className="bf-current-track-info">
+                <div className="current-track-info">
                     <div className="album-cover-container">
                         <SkeletonLoader
                             className="album-cover-loader"

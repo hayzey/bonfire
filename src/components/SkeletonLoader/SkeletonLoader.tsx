@@ -7,10 +7,10 @@ interface SkeletonLoaderProps {
 }
 
 export const SkeletonLoader: FunctionComponent<SkeletonLoaderProps> = ({type, className}) => {
-    let classes = 'bf-skeleton-loader';
+    let classes = 'skeleton-loader';
 
     if (type === 'image') {
-        classes += ' bf-skeleton-loader-image';
+        classes += ' skeleton-loader-image';
     }
 
     if (className) {

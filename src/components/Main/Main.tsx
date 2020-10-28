@@ -284,7 +284,7 @@ export class Main extends React.Component<MainProps, MainState> {
     }
 
     render() {
-        let classes = 'bf-main';
+        let classes = 'main';
         
         return (
             <div className={classes}>

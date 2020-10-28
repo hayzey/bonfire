@@ -31,7 +31,7 @@ export class PlaybackControlsPrimary extends React.Component<PlaybackControlsPri
     
     render() {
         return (
-            <div className="bf-playback-controls-primary">
+            <div className="playback-controls-primary">
                 <IconButton
                     className="previous-track-button"
                     disabled={ !this.props.ready }

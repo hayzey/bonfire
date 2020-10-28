@@ -12,18 +12,34 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
 import { PlaybackState } from '../../services/SpotifyPlayer';
 import { MetaTrack } from '../../services/SpotifyTrack';
+import { Track } from '../../services/SpotifyTrack';
 
 interface TrackListProps {
     playbackState?: PlaybackState;
-    tracks: Array<MetaTrack>,
-    onPlayTrack: (metaTrack: MetaTrack) => void
+    metaTracks?: Array<MetaTrack>;
+    tracks?: Array<Track>;
+    onPlayTrack: (metaTrack: MetaTrack) => void;
 }
 
-interface TrackListState {
-    tracks: Array<MetaTrack>
-}
+export class TrackList extends React.Component<TrackListProps> {
+    getMetaTracks(): MetaTrack[] {
+        if (this.props.tracks) {
+            let metaTracks: MetaTrack[] = this.props.tracks.map((track) => {
+                let metaTrack: MetaTrack = {
+                    track: track
+                };
 
-export class TrackList extends React.Component<TrackListProps, TrackListState> {
+                return metaTrack;
+            });
+
+            return metaTracks;
+        } else if (this.props.metaTracks) {
+            return this.props.metaTracks;
+        }
+
+        return [];
+    }
+    
     getTrackName(metaTrack: MetaTrack): string {
         return metaTrack?.track?.name;
     }
@@ -77,10 +93,14 @@ export class TrackList extends React.Component<TrackListProps, TrackListState> {
     handleTrackPlayClick = (metaTrack: MetaTrack) => {
         this.playTrack(metaTrack);
     }
+
+    handleTrackDoubleClick = (metaTrack: MetaTrack) => {
+        this.playTrack(metaTrack);
+    }
     
     render() {
         return (
-            <div className="bf-track-list">
+            <div className="track-list">
                 <TableContainer>
                     <Table aria-label="Tracks">
                         <TableHead>
@@ -92,21 +112,22 @@ export class TrackList extends React.Component<TrackListProps, TrackListState> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.props.tracks.map((track) => (
+                            {this.getMetaTracks().map((metaTrack) => (
                                 <TableRow
-                                    className={ this.getTrackRowClasses(track) }
-                                    key={ track.track.id }>
+                                    className={ this.getTrackRowClasses(metaTrack) }
+                                    onDoubleClick={ () => this.handleTrackDoubleClick(metaTrack) }
+                                    key={ metaTrack.track.id }>
                                     <TableCell className="track-play-button-cell">
                                     <IconButton
                                         className="track-play-button"
-                                        onClick={ () => this.handleTrackPlayClick(track) }
+                                        onClick={ () => this.handleTrackPlayClick(metaTrack) }
                                         size="small">
                                         <PlayCircleFilledIcon />
                                     </IconButton>
                                     </TableCell>
-                                    <TableCell className="track-title-cell" component="th" scope="row">{ this.getTrackName(track) }</TableCell>
-                                    <TableCell className="track-artist-cell">{ this.getTrackArtistName(track) }</TableCell>
-                                    <TableCell className="track-album-cell">{ this.getTrackAlbumName(track) }</TableCell>
+                                    <TableCell className="track-title-cell" component="th" scope="row">{ this.getTrackName(metaTrack) }</TableCell>
+                                    <TableCell className="track-artist-cell">{ this.getTrackArtistName(metaTrack) }</TableCell>
+                                    <TableCell className="track-album-cell">{ this.getTrackAlbumName(metaTrack) }</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

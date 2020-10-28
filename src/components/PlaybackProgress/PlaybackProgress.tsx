@@ -66,7 +66,7 @@ export class PlaybackProgress extends React.Component<PlaybackProgressProps> {
 
     render() {
         return (
-            <div className="bf-playback-progress">
+            <div className="playback-progress">
                 <p className="progress-value">{ this.getDisplayPosition() }</p>
                 <div className="track-position-slider-container">
                     <Slider
