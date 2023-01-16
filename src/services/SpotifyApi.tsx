@@ -1,15 +1,15 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { AuthService } from './AuthService';
 
-export interface AuthRequestSuccessConfigHeaders {
+interface AuthRequestSuccessConfigHeaders {
     'Authorization'?: string;
     'Content-Type'?: string;
 }
 
-// export interface AuthRequestSuccessConfig {
-//     url: string;
-//     headers: AuthRequestSuccessConfigHeaders;
-// }
+type AuthRequestSuccessConfig = AxiosRequestConfig & {
+    url: string;
+    headers: AuthRequestSuccessConfigHeaders;
+}
 
 export class SpotifyApi {
     static spotifyApiUrl = 'https://api.spotify.com/v1/';
@@ -20,6 +20,7 @@ export class SpotifyApi {
 
     static configHttpInterceptors() {
         axios.interceptors.request.use(
+            // @ts-ignore
             this.authRequestSuccessInterceptor.bind(this)
         );
 
@@ -33,7 +34,7 @@ export class SpotifyApi {
     }
 
     // Adds the appropriate headers to any Spotify API requests
-    static authRequestSuccessInterceptor(config: AxiosRequestConfig) {
+    static authRequestSuccessInterceptor(config: AuthRequestSuccessConfig) {
         if (config?.url?.includes(this.spotifyApiUrl)) {
             const token = AuthService.getSpotifyAuthToken();
             
