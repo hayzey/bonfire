@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 
 import { App } from './components/App/App';
 
 import './index.scss';
 
-const mainTheme = createMuiTheme({
+const mainTheme = createTheme({
     palette: {
         type: 'dark',
         background: {

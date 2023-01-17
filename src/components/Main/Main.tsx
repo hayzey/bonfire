@@ -72,12 +72,14 @@ export class Main extends React.Component<MainProps, MainState> {
             // Connect to the player
             this.spotifyPlayer.connect()
                 .then((success: boolean) => {
+                    this.setState({
+                        sdkReady: true
+                    });
+                    
                     if (success) {
-                        console.info('The Web Playback SDK successfully connected to Spotify!', this.spotifyPlayer);
-
-                        this.setState({
-                            sdkReady: true
-                        });
+                        console.info('Web Playback SDK successfully connected to Spotify!', this.spotifyPlayer);
+                    } else {
+                        console.info('Web Playback SDK initialized, but not authed. Will log in...', this.spotifyPlayer);
                     }
                 });
 
